@@ -1,0 +1,54 @@
+.hero {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10% 0 0;
+}
+
+.hero h1 {
+  font-size: 2.35em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+.hero p {
+  font-size: 1.25em;
+  color: black;
+}
+
+.wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 5%;
+  display: flex;
+  flex-direction: column;
+}
+
+.stats {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+  font-size: 0.7em;
+  opacity: 0.9;
+}
+
+.stats p {
+  color: #a5a5a5;
+  padding-top: 1em;
+  border-top: 1px solid #a5a5a5;
+}
+
+.hero input {
+  height: 50px;
+  padding: 0 20px;
+  border-radius: 3px;
+  border: 1px solid #a5a5a5;
+}
+
+.filters {
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: repeat(2, 200px);
+}

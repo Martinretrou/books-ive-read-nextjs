@@ -1,67 +1,75 @@
-import Head from 'next/head';
+/* eslint-disable no-nested-ternary */
+import React, { useMemo, useState } from 'react';
+import { BooksList, Hero } from '@/components';
+import { formatBooks } from '@/helpers/book';
+import { Book } from '@/components/books-list';
 import styles from '../styles/Home.module.css';
+import { client } from '../../prismic-configuration';
 
-export default function Home() {
+type HomeProps = {
+  data: any;
+};
+
+const Home: React.FC<HomeProps> = ({ data }) => {
+  const [search, setSearch] = useState<string | null>(null);
+
+  const books = useMemo(() => {
+    if (data?.data?.books) {
+      return formatBooks(data?.data?.books).sort((a: Book, b: Book) =>
+        a.readIn > b.readIn ? -1 : a.readIn < b.readIn ? 1 : 0,
+      );
+    }
+    return [];
+  }, [data]);
+
+  const booksReadThisYear = useMemo(
+    () =>
+      books?.filter(
+        (book: Book) => book.readIn === String(new Date().getFullYear()),
+      ).length,
+    [data],
+  );
+
+  const resultQuery = useMemo(() => {
+    if (search) {
+      return books?.filter((book: Book) =>
+        search
+          .toLowerCase()
+          .split(` `)
+          .every(
+            (v) =>
+              book?.title?.toLowerCase().includes(v) ||
+              book?.author?.toLowerCase().includes(v),
+          ),
+      );
+    }
+    return books;
+  }, [search, books]);
+
+  const heroData = useMemo(
+    () => ({
+      title: data?.data.hero_title[0].text,
+      description: data?.data.hero_description[0].text,
+      onSearchChange: setSearch,
+      totalBooks: books?.length,
+      readThisYear: booksReadThisYear,
+    }),
+    [data, books, booksReadThisYear],
+  );
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{` `}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <p className={styles.description}>This is not an official starter!</p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=typescript-nextjs-starter"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=typescript-nextjs-starter"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{` `}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+    <div className={styles.page}>
+      <div className={styles.wrapper}>
+        <Hero {...heroData} />
+        <BooksList books={resultQuery} />
+      </div>
     </div>
   );
+};
+
+export async function getServerSideProps() {
+  const data = await client.getSingle(`homepage`, {});
+
+  return { props: { data } };
 }
+
+export default Home;
