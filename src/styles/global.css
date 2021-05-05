@@ -72,7 +72,12 @@ input {
   outline: none !important;
 }
 
-.select__placeholder {
+::placeholder {
+  color: black !important;
+}
+
+.select__placeholder,
+.input-range__label-container {
   color: black !important;
 }
 
