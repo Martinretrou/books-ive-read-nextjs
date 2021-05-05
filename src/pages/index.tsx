@@ -79,8 +79,8 @@ const Home: React.FC<HomeProps> = ({ data }) => {
       if (typeof window !== `undefined`) {
         // Set window width/height to state
         setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
+          width: window.innerWidth as any,
+          height: window.innerHeight as any,
         });
       }
     }
@@ -96,8 +96,12 @@ const Home: React.FC<HomeProps> = ({ data }) => {
     }
   }, []);
 
+  const isMobile = useMemo(() => (windowSize?.width as any) <= 1000, [
+    windowSize?.width,
+  ]);
+
   useEffect(() => {
-    if (typeof window !== `undefined` && windowSize?.width > 1000) {
+    if (typeof window !== `undefined` && !isMobile) {
       const menuEl = document.querySelector(`.menu`);
       // initialize the smooth scroll
       // const scroll = new LocomotiveScroll({ el: menuEl, smooth: true });
@@ -113,10 +117,6 @@ const Home: React.FC<HomeProps> = ({ data }) => {
       );
     }
   }, [windowSize?.width, resultQuery]);
-
-  const isMobile = useMemo(() => windowSize?.width <= 1000, [
-    windowSize?.width,
-  ]);
 
   return (
     <div className={styles.page}>
