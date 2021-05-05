@@ -131,3 +131,9 @@
 .side .oldest {
   bottom: 40px;
 }
+
+@media screen and (max-width: 450px) {
+  .item {
+    padding: 15px 0;
+  }
+}

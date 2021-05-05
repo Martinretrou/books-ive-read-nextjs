@@ -4,7 +4,6 @@ import { BooksList, Hero } from '@/components';
 import { formatBooks } from '@/helpers/book';
 import { Book } from '@/components/books-list';
 import Head from 'next/head';
-import LocomotiveScroll from 'locomotive-scroll';
 import Menu from '@/helpers/menu';
 import { NextSeo } from 'next-seo';
 import { client } from '../../prismic-configuration';

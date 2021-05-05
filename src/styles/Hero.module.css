@@ -77,3 +77,30 @@
   font-size: 14px;
   margin-bottom: 30px;
 }
+
+@media screen and (max-width: 750px) {
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .filtersitems {
+    grid-template-columns: 1fr;
+    row-gap: 60px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .wrapper p {
+    display: none;
+  }
+  .wrapper,
+  .filters {
+    padding: 0;
+  }
+  .filters {
+    margin-top: 20px;
+    margin-bottom: 60px;
+  }
+  .filter {
+    padding-top: 0;
+  }
+}
