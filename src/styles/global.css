@@ -39,3 +39,34 @@ a {
   background-position: center;
   background-size: cover;
 }
+
+.input-range {
+  max-width: 250px;
+  margin-left: 3%;
+}
+
+.input-range__slider {
+  background: black;
+  border-color: black;
+}
+
+.input-range__track--active {
+  background: black;
+}
+
+.select__control {
+  border: 2px solid black !important;
+  border-radius: 0 !important;
+}
+
+.select__indicator-separator {
+  background-color: black !important;
+}
+
+.select__indicator {
+  color: black !important;
+}
+
+input {
+  outline: none !important;
+}

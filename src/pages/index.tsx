@@ -16,6 +16,7 @@ type HomeProps = {
 
 const Home: React.FC<HomeProps> = ({ data }) => {
   const [search, setSearch] = useState<string | null>(null);
+  const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [rating, setRating] = useState<any>({ min: 0, max: 5 });
   const [windowSize, setWindowSize] = useState({
     width: undefined,
@@ -45,9 +46,16 @@ const Home: React.FC<HomeProps> = ({ data }) => {
     [books],
   );
 
+  const filteredBooksBySelectedYear = useMemo(() => {
+    if (selectedYear && books) {
+      return books.filter((book) => book.readIn === selectedYear.toString());
+    }
+    return books;
+  }, [selectedYear, books]);
+
   const resultQuery = useMemo(() => {
     if (search) {
-      return books?.filter((book: Book) =>
+      return filteredBooksBySelectedYear?.filter((book: Book) =>
         search
           .toLowerCase()
           .split(` `)
@@ -58,8 +66,17 @@ const Home: React.FC<HomeProps> = ({ data }) => {
           ),
       );
     }
-    return books;
-  }, [search, books]);
+    return filteredBooksBySelectedYear;
+  }, [search, books, filteredBooksBySelectedYear]);
+
+  const allYears = useMemo(() => {
+    if (books) {
+      return [...new Set(books.map((book) => book.readIn))]
+        .sort((a, b) => (a > b ? 1 : a < b ? -1 : 0))
+        .reverse();
+    }
+    return [];
+  }, [books]);
 
   const heroData = useMemo(
     () => ({
@@ -67,7 +84,9 @@ const Home: React.FC<HomeProps> = ({ data }) => {
       description: data?.data.hero_description[0].text,
       onSearchChange: setSearch,
       onRangeChange: setRating,
+      onYearChange: setSelectedYear,
       rating,
+      allYears,
       totalBooks: books?.length,
       readThisYear: booksReadThisYear,
     }),
@@ -77,7 +96,6 @@ const Home: React.FC<HomeProps> = ({ data }) => {
   useEffect(() => {
     function handleResize() {
       if (typeof window !== `undefined`) {
-        // Set window width/height to state
         setWindowSize({
           width: window.innerWidth as any,
           height: window.innerHeight as any,
@@ -85,13 +103,8 @@ const Home: React.FC<HomeProps> = ({ data }) => {
       }
     }
     if (typeof window !== `undefined`) {
-      // Add event listener
       window.addEventListener(`resize`, handleResize);
-
-      // Call handler right away so state gets updated with initial window size
       handleResize();
-
-      // Remove event listener on cleanup
       return () => window.removeEventListener(`resize`, handleResize);
     }
   }, []);
@@ -103,13 +116,6 @@ const Home: React.FC<HomeProps> = ({ data }) => {
   useEffect(() => {
     if (typeof window !== `undefined` && !isMobile) {
       const menuEl = document.querySelector(`.menu`);
-      // initialize the smooth scroll
-      // const scroll = new LocomotiveScroll({ el: menuEl, smooth: true });
-
-      // initialize custom cursor
-      // const cursor = new Cursor(document.querySelector(`.cursor`));
-
-      // initialize menu
       // eslint-disable-next-line no-new
       new Menu(
         menuEl,

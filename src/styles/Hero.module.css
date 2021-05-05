@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 10% 0 0;
+  padding: 10% 5% 0;
 }
 
 .hero h1 {
@@ -18,7 +18,8 @@
 }
 
 .wrapper {
-  max-width: 800px;
+  padding: 0 50px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -34,22 +35,28 @@
 }
 
 .stats p {
-  color: #a5a5a5;
+  color: black;
   padding-top: 1em;
-  border-top: 1px solid #a5a5a5;
+  border-top: 2px solid black;
 }
 
-.hero input {
+.wrapper input {
   height: 50px;
   padding: 0 20px;
-  border-radius: 3px;
-  border: 1px solid #a5a5a5;
+  border: 2px solid black;
 }
 
 .filters {
+  position: relative;
+  z-index: 2;
+  padding: 0 50px;
   width: 100%;
-  max-width: 800px;
   margin: 80px auto 0;
+}
+
+.filter {
+  padding-top: 1em;
+  border-top: 2px solid black;
 }
 
 .filterstitle {
@@ -62,7 +69,8 @@
 .filtersitems {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 200px);
+  grid-gap: 20px;
+  grid-template-columns: 1fr 1fr;
 }
 
 .rating {
