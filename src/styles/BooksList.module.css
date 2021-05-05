@@ -1,6 +1,5 @@
 .list {
   position: relative;
-  max-width: 800px;
   width: 100%;
   margin: 0 auto 10%;
   padding: 5% 5% 0;
@@ -16,11 +15,12 @@
 }
 
 .item {
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr 6fr;
-  padding: 7px 0 15px;
-  border-bottom: 1px solid #f0efef;
+  grid-template-columns: 1fr;
+  padding: 50px 50px;
   align-items: center;
+  cursor: crosshair;
 }
 
 .item + .item {
@@ -42,6 +42,7 @@
   display: grid;
   grid-template-columns: 3fr 1fr;
   align-items: center;
+  z-index: 1;
 }
 
 .other {
@@ -52,9 +53,10 @@
 
 .title {
   font-weight: bold;
-  font-size: 1.35em;
+  font-size: 4em;
   margin-bottom: 10px;
   margin-top: unset;
+  color: black;
 }
 
 .author {

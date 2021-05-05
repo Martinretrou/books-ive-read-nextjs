@@ -13,6 +13,7 @@ type HeroProps = {
   totalBooks?: number;
   readThisYear?: number;
   onSearchChange: (value: string) => void;
+  onRangeChange: (range: { min: number; max: number }) => void;
 };
 
 const Hero = ({
@@ -21,8 +22,13 @@ const Hero = ({
   totalBooks,
   readThisYear,
   onSearchChange,
+  onRangeChange,
 }: HeroProps) => {
   const [rating, setRating] = useState<any>({ min: 0, max: 5 });
+  const handleRangeChange = (value: any) => {
+    setRating(value);
+    onRangeChange(value);
+  };
   return (
     <header className={styles.hero}>
       <div className={styles.wrapper}>
@@ -36,25 +42,27 @@ const Hero = ({
           }
         />
         <div className={styles.stats}>
-          {readThisYear && (
+          {readThisYear !== 0 && (
             <p>
               Books read so far in {new Date().getFullYear()}: {readThisYear}
             </p>
           )}
-          {totalBooks && <p>Total books read: {totalBooks}</p>}
+          {totalBooks !== 0 && <p>Total books read: {totalBooks}</p>}
         </div>
       </div>
-      <p>Filters</p>
+
       <div className={styles.filters}>
-        <div className={styles.filter}>
-          <InputRange
-            maxValue={5}
-            minValue={0}
-            value={rating}
-            onChange={(value) => {
-              setRating(value as any);
-            }}
-          />
+        <p className={styles.filterstitle}>Filters</p>
+        <div className={styles.filtersitems}>
+          <div className={styles.filter}>
+            <p className={styles.rating}>Rating</p>
+            <InputRange
+              maxValue={5}
+              minValue={0}
+              value={rating}
+              onChange={(value) => handleRangeChange(value as any)}
+            />
+          </div>
         </div>
       </div>
     </header>
