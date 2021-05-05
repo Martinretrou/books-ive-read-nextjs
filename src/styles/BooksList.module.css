@@ -23,17 +23,25 @@
   cursor: crosshair;
 }
 
+.item.mobile {
+  grid-template-columns: 1fr 4fr;
+}
+
+.item.mobile .title {
+  font-size: 30px;
+}
+
 .item + .item {
   margin-top: 15px;
 }
 
 .img {
-  max-height: 80px;
+  max-height: 100px;
   margin-right: 10px;
 }
 
 .img img {
-  max-height: 80px;
+  max-height: 100px;
   height: 100%;
   width: auto;
 }

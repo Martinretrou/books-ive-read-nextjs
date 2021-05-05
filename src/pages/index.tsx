@@ -17,6 +17,10 @@ type HomeProps = {
 const Home: React.FC<HomeProps> = ({ data }) => {
   const [search, setSearch] = useState<string | null>(null);
   const [rating, setRating] = useState<any>({ min: 0, max: 5 });
+  const [windowSize, setWindowSize] = useState({
+    width: undefined,
+    height: undefined,
+  });
 
   const books = useMemo(() => {
     if (data?.data?.books) {
@@ -71,7 +75,29 @@ const Home: React.FC<HomeProps> = ({ data }) => {
   );
 
   useEffect(() => {
+    function handleResize() {
+      if (typeof window !== `undefined`) {
+        // Set window width/height to state
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+    }
     if (typeof window !== `undefined`) {
+      // Add event listener
+      window.addEventListener(`resize`, handleResize);
+
+      // Call handler right away so state gets updated with initial window size
+      handleResize();
+
+      // Remove event listener on cleanup
+      return () => window.removeEventListener(`resize`, handleResize);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== `undefined` && windowSize?.width > 1000) {
       const menuEl = document.querySelector(`.menu`);
       // initialize the smooth scroll
       // const scroll = new LocomotiveScroll({ el: menuEl, smooth: true });
@@ -86,7 +112,11 @@ const Home: React.FC<HomeProps> = ({ data }) => {
         resultQuery?.map((book) => book.image.url),
       );
     }
-  }, [resultQuery]);
+  }, [windowSize?.width, resultQuery]);
+
+  const isMobile = useMemo(() => windowSize?.width <= 1000, [
+    windowSize?.width,
+  ]);
 
   return (
     <div className={styles.page}>
@@ -111,7 +141,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
       />
       <div className={styles.wrapper}>
         <Hero {...heroData} />
-        <BooksList books={resultQuery} />
+        <BooksList isMobile={isMobile} books={resultQuery} />
       </div>
     </div>
   );

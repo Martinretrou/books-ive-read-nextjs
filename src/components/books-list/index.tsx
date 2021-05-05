@@ -23,12 +23,17 @@ export type Book = {
 
 type BooksListProps = {
   books: Book[];
+  isMobile: boolean;
 };
 
-const BooksList = ({ books }: BooksListProps) => (
+const BooksList = ({ books, isMobile }: BooksListProps) => (
   <section className={classNames(styles.list, `menu`)}>
     {map(books, (book: Book, index: number) => (
-      <BookListItem key={`${book?.title}-${index}`} book={book} />
+      <BookListItem
+        isMobile={isMobile}
+        key={`${book?.title}-${index}`}
+        book={book}
+      />
     ))}
     {/* <svg className="cursor" width="80" height="80" viewBox="0 0 80 80">
       <circle className="cursor__inner" cx="40" cy="40" r="20" />
