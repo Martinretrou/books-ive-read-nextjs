@@ -26,7 +26,11 @@
     ]
   },
   "dependencies": {
+    "classnames": "2.3.1",
     "express": "4.17.1",
+    "gsap": "3.6.1",
+    "imagesloaded": "4.1.4",
+    "locomotive-scroll": "4.1.1",
     "lodash.map": "4.6.0",
     "next": "10.2.0",
     "next-routes": "1.4.2",
