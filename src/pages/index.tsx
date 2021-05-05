@@ -5,8 +5,6 @@ import { formatBooks } from '@/helpers/book';
 import { Book } from '@/components/books-list';
 import Head from 'next/head';
 import LocomotiveScroll from 'locomotive-scroll';
-import Cursor from '@/helpers/cursor';
-import { preloader } from '@/helpers/preloader';
 import Menu from '@/helpers/menu';
 import { client } from '../../prismic-configuration';
 import styles from '../styles/Home.module.css';
