@@ -1,6 +1,11 @@
 import map from 'lodash.map';
 import React from 'react';
 
+import {
+  LazyLoadComponent,
+  trackWindowScroll,
+} from 'react-lazy-load-image-component';
+
 import classNames from 'classnames';
 import { BookListItem } from '..';
 import styles from '../../styles/BooksList.module.css';
@@ -24,16 +29,18 @@ export type Book = {
 type BooksListProps = {
   books: Book[];
   isMobile: boolean;
+  scrollPosition: any;
 };
 
-const BooksList = ({ books, isMobile }: BooksListProps) => (
+const BooksList = ({ books, isMobile, scrollPosition }: BooksListProps) => (
   <section className={classNames(styles.list, `menu`)}>
     {map(books, (book: Book, index: number) => (
-      <BookListItem
-        isMobile={isMobile}
+      <LazyLoadComponent
+        scrollPosition={scrollPosition}
         key={`${book?.title}-${index}`}
-        book={book}
-      />
+      >
+        <BookListItem isMobile={isMobile} book={book} />
+      </LazyLoadComponent>
     ))}
     {/* <svg className="cursor" width="80" height="80" viewBox="0 0 80 80">
       <circle className="cursor__inner" cx="40" cy="40" r="20" />
@@ -41,4 +48,4 @@ const BooksList = ({ books, isMobile }: BooksListProps) => (
   </section>
 );
 
-export default BooksList;
+export default trackWindowScroll(BooksList);
