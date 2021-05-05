@@ -136,4 +136,8 @@
   .item {
     padding: 15px 0;
   }
+  .img img {
+    width: 66px;
+    height: 100px;
+  }
 }

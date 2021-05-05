@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactStars from 'react-rating-stars-component';
 import classNames from 'classnames';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Book } from '../books-list';
 import styles from '../../styles/BooksList.module.css';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 type BookListItemProps = {
   book: Book;
@@ -16,7 +18,11 @@ const BookListItem = ({ book, isMobile }: BookListItemProps) => (
   >
     {isMobile && (
       <div className={styles.img}>
-        <img src={book.image.url} alt={book.image.alt} />
+        <LazyLoadImage
+          effect="blur"
+          src={book.image.url}
+          alt={book.image.alt}
+        />
       </div>
     )}
     <div className={styles.content}>
