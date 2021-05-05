@@ -6,6 +6,7 @@ import { Book } from '@/components/books-list';
 import Head from 'next/head';
 import LocomotiveScroll from 'locomotive-scroll';
 import Menu from '@/helpers/menu';
+import { NextSeo } from 'next-seo';
 import { client } from '../../prismic-configuration';
 import styles from '../styles/Home.module.css';
 
@@ -93,6 +94,21 @@ const Home: React.FC<HomeProps> = ({ data }) => {
         <title>Books I've read</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
+      <NextSeo
+        title="Books I've read"
+        description="Books I've read in the previous years."
+        canonical="https://www.booksiveread.fr/"
+        openGraph={{
+          url: `https://www.booksiveread.fr/`,
+          title: `Books I've read`,
+          description: `Books I've read`,
+          site_name: `Books I've read`,
+        }}
+        twitter={{
+          handle: `@MartinRetrou`,
+          cardType: `summary_large_image`,
+        }}
+      />
       <div className={styles.wrapper}>
         <Hero {...heroData} />
         <BooksList books={resultQuery} />
