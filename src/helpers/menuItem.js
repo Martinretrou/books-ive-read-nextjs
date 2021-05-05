@@ -53,7 +53,9 @@ export default class MenuItem {
     this.DOM.revealInner.className = 'hover-reveal__inner';
     this.DOM.revealImage = document.createElement('div');
     this.DOM.revealImage.className = 'hover-reveal__img';
-    this.DOM.revealImage.style.backgroundImage = `url(${this.imageUrl})`;
+    this.DOM.revealImage.style.backgroundImage = `url(${
+      this.imageUrl ? this.imageUrl : ''
+    })`;
 
     this.DOM.revealInner.appendChild(this.DOM.revealImage);
     this.DOM.reveal.appendChild(this.DOM.revealInner);

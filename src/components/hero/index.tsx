@@ -71,6 +71,8 @@ const Hero = ({
           <div className={styles.filter}>
             <p className={styles.rating}>Rating</p>
             <InputRange
+              ariaLabelledby="Input range controls"
+              ariaControls="Input range controls"
               maxValue={5}
               minValue={0}
               value={rating}
@@ -78,8 +80,12 @@ const Hero = ({
             />
           </div>
           <div className={styles.filter}>
-            <p className={styles.rating}>Read in</p>
+            <label htmlFor="select" className={styles.rating}>
+              Read in
+            </label>
             <Select
+              inputId="select"
+              name="select"
               className="select"
               classNamePrefix="select"
               options={[{ label: `All years`, value: false }, ...options]}

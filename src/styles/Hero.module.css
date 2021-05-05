@@ -34,7 +34,8 @@
   opacity: 0.9;
 }
 
-.stats p {
+.stats p,
+.stats label {
   color: black;
   padding-top: 1em;
   border-top: 2px solid black;

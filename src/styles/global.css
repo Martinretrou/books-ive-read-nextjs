@@ -55,6 +55,7 @@ a {
 }
 
 .select__control {
+  margin-top: 20px;
   border: 2px solid black !important;
   border-radius: 0 !important;
 }
@@ -69,6 +70,10 @@ a {
 
 input {
   outline: none !important;
+}
+
+.select__placeholder {
+  color: black !important;
 }
 
 @media screen and (max-width: 450px) {
