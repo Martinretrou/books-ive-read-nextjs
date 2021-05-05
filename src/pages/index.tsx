@@ -82,10 +82,11 @@ const Home: React.FC<HomeProps> = ({ data }) => {
       // eslint-disable-next-line no-new
       new Menu(
         menuEl,
-        books?.map((book) => book.image.url),
+        resultQuery?.map((book) => book.image.url),
       );
     }
-  }, []);
+  }, [resultQuery]);
+
   return (
     <div className={styles.page}>
       <Head>
