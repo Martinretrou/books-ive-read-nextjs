@@ -1,17 +1,17 @@
 import { hasWindow } from '@/helpers/next';
 
 // log the pageview with their URL
-export const pageview = (url) => {
+export const pageview = (url: string) => {
   if (hasWindow()) {
-    window.gtag(`config`, process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
+    (window as any).gtag(`config`, process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
       page_path: url,
     });
   }
 };
 
 // log specific events happening.
-export const event = ({ action, params }) => {
+export const event = ({ action, params }: any) => {
   if (hasWindow()) {
-    window.gtag(`event`, action, params);
+    (window as any).gtag(`event`, action, params);
   }
 };
