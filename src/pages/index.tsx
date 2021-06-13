@@ -4,8 +4,10 @@ import { BooksList, Hero } from '@/components';
 import { formatBooks } from '@/helpers/book';
 import { Book } from '@/components/books-list';
 import Head from 'next/head';
-import Menu from '@/helpers/menu';
+import Cursor from '@/helpers/cursor';
 import { NextSeo } from 'next-seo';
+import { SmoothScrollProvider } from '../providers/ScrollProvider';
+
 import { client } from '../../prismic-configuration';
 import styles from '../styles/Home.module.css';
 
@@ -77,6 +79,17 @@ const Home: React.FC<HomeProps> = ({ data }) => {
     return [];
   }, [books]);
 
+  const booksByYear = useMemo(() => {
+    if (books && allYears) {
+      const temp = [];
+      allYears.map((year) => {
+        temp.push(books.filter((book) => book.readIn === year.toString()));
+      });
+      return temp;
+    }
+    return [];
+  }, [books, allYears]);
+
   const heroData = useMemo(
     () => ({
       title: data?.data.hero_title[0].text,
@@ -113,42 +126,68 @@ const Home: React.FC<HomeProps> = ({ data }) => {
   ]);
 
   useEffect(() => {
-    if (typeof window !== `undefined` && !isMobile) {
-      const menuEl = document.querySelector(`.menu`);
-      // eslint-disable-next-line no-new
-      new Menu(
-        menuEl,
-        resultQuery?.map((book) => book.image.url),
-      );
-    }
-  }, [windowSize?.width, resultQuery]);
+    const cursor = new Cursor(document.querySelector(`.cursor`));
+    [...document.querySelectorAll(`a`)].forEach((link) => {
+      link.addEventListener(`mouseenter`, () => cursor.enter());
+      link.addEventListener(`mouseleave`, () => cursor.leave());
+    });
+  }, []);
 
   return (
-    <div className={styles.page}>
-      <Head>
-        <title>Books I've read</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <NextSeo
-        title="Books I've read"
-        description="Books I've read in the previous years."
-        canonical="https://www.booksiveread.fr/"
-        openGraph={{
-          url: `https://www.booksiveread.fr/`,
-          title: `Books I've read`,
-          description: `Books I've read`,
-          site_name: `Books I've read`,
-        }}
-        twitter={{
-          handle: `@MartinRetrou`,
-          cardType: `summary_large_image`,
-        }}
-      />
-      <div className={styles.wrapper}>
-        <Hero {...heroData} />
-        <BooksList isMobile={isMobile} books={resultQuery} />
+    <SmoothScrollProvider options={{ smooth: true }}>
+      <div className={styles.page}>
+        <Head>
+          <title>Books I've read</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
+        <NextSeo
+          title="Books I've read"
+          description="Books I've read in the previous years."
+          canonical="https://www.booksiveread.fr/"
+          openGraph={{
+            url: `https://www.booksiveread.fr/`,
+            title: `Books I've read`,
+            description: `Books I've read`,
+            site_name: `Books I've read`,
+          }}
+          twitter={{
+            handle: `@MartinRetrou`,
+            cardType: `summary_large_image`,
+          }}
+        />
+        <div className={styles.wrapper}>
+          {/* <Hero {...heroData} /> */}
+          <BooksList
+            isMobile={isMobile}
+            byYears={booksByYear}
+            books={resultQuery}
+            years={allYears}
+          />
+        </div>
+        {/* <svg className="cursor" width="20" height="20" viewBox="0 0 20 20">
+          <circle className="cursor__inner" cx="10" cy="10" r="5" />
+        </svg> */}
+        <svg
+          className="cursor"
+          width="40"
+          height="40"
+          viewBox="0 0 40 40"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            className="cursor__inner"
+            cx="20"
+            cy="20"
+            r="19.5"
+            stroke="white"
+          />
+        </svg>
       </div>
-    </div>
+    </SmoothScrollProvider>
   );
 };
 

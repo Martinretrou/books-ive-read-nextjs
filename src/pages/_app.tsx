@@ -23,5 +23,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router.events]);
 
-  return <Component {...pageProps} />;
+  return (
+    <main data-scroll-container className="container">
+      <Component {...pageProps} />
+      {` `}
+    </main>
+  );
 }

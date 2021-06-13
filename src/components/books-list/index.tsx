@@ -24,16 +24,23 @@ export type Book = {
 type BooksListProps = {
   books: Book[];
   isMobile: boolean;
+  byYears: Book[][];
+  years: string[];
 };
 
-const BooksList = ({ books, isMobile }: BooksListProps) => (
-  <section className={classNames(styles.list, `menu`)}>
-    {map(books, (book: Book, index: number) => (
-      <BookListItem
-        key={`${book?.title}-${index}`}
-        isMobile={isMobile}
-        book={book}
-      />
+const BooksList = ({ books, isMobile, years, byYears }: BooksListProps) => (
+  <section data-scroll-container className={classNames(styles.list, `menu`)}>
+    {map(years, (year: string, index: number) => (
+      <div className={styles.year} data-scroll>
+        <h2>{year} -</h2>
+        {map(byYears[index], (book: Book, indexIndex: number) => (
+          <BookListItem
+            key={`${book?.title}-${indexIndex}`}
+            isMobile={isMobile}
+            book={book}
+          />
+        ))}
+      </div>
     ))}
     {/* <svg className="cursor" width="80" height="80" viewBox="0 0 80 80">
       <circle className="cursor__inner" cx="40" cy="40" r="20" />

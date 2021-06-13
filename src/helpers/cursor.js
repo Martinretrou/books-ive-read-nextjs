@@ -1,24 +1,24 @@
 import { gsap } from 'gsap';
-import { lerp, getMousePos } from './hover';
+import { lerp, getMousePos } from './utils';
 
 // Track the mouse position
 let mouse = { x: 0, y: 0 };
 
-if (typeof window !== `undefined`) {
-  window.addEventListener('mousemove', (ev) => (mouse = getMousePos(ev)));
-}
-
 export default class Cursor {
   constructor(el) {
     if (typeof window !== `undefined`) {
+      window.addEventListener('mousemove', (ev) => (mouse = getMousePos(ev)));
+      console.log('init cursor', el, mouse);
       this.DOM = { el };
-      this.DOM.el.style.opacity = 0;
+      // this.DOM.el.style.opacity = 0;
 
       this.bounds = this.DOM.el.getBoundingClientRect();
 
       this.renderedStyles = {
         tx: { previous: 0, current: 0, amt: 0.2 },
         ty: { previous: 0, current: 0, amt: 0.2 },
+        scale: { previous: 1, current: 1, amt: 0.15 },
+        // opacity: {previous: 1, current: 1, amt: 0.1}
       };
 
       this.onMouseMoveEv = () => {
@@ -38,6 +38,20 @@ export default class Cursor {
     }
   }
 
+  // updateCursorPosition(value) {
+  //   mouse = value;
+  // }
+
+  enter() {
+    this.renderedStyles.scale.current = 2.5;
+    // this.renderedStyles['opacity'].current = 0.5;
+  }
+
+  leave() {
+    this.renderedStyles.scale.current = 1;
+    // this.renderedStyles['opacity'].current = 1;
+  }
+
   render() {
     if (typeof window !== `undefined`) {
       this.renderedStyles.tx.current = mouse.x - this.bounds.width / 2;
@@ -51,7 +65,8 @@ export default class Cursor {
         );
       }
 
-      this.DOM.el.style.transform = `translateX(${this.renderedStyles.tx.previous}px) translateY(${this.renderedStyles.ty.previous}px)`;
+      this.DOM.el.style.transform = `translateX(${this.renderedStyles.tx.previous}px) translateY(${this.renderedStyles.ty.previous}px) scale(${this.renderedStyles.scale.previous})`;
+      // this.DOM.el.style.opacity = this.renderedStyles['opacity'].previous;
 
       requestAnimationFrame(() => this.render());
     }
