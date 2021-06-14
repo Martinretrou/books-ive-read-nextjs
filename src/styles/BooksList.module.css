@@ -1,11 +1,5 @@
 .list,
 .year {
-  display: flex !important;
-  height: 90vh !important;
-  position: relative !important;
-  justify-content: flex-start !important;
-  align-items: flex-start;
-  margin-top: 5vh;
 }
 
 .list-total-books-shown {
@@ -14,11 +8,14 @@
 }
 
 .item {
+  box-sizing: border-box;
+  width: 328px;
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  padding: 50px 50px;
   align-items: center;
+  justify-items: center;
+  margin: 0 auto;
   color: white;
 }
 
@@ -29,10 +26,6 @@
 .item.mobile .title {
   font-size: 30px;
 }
-
-/* .item + .item {
-  margin-top: 15px;
-} */
 
 .img {
   width: 100%;

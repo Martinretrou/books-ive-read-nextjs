@@ -17,7 +17,7 @@ export const SmoothScrollProvider = ({ children, options }) => {
             new LocomotiveScroll({
               el: document.querySelector(`[data-scroll-container]`),
               smooth: true,
-              direction: `horizontal`,
+              direction: `vertical`,
             }),
           );
         } catch (error) {
