@@ -35,9 +35,6 @@ const BooksList = ({ books, isMobile }: BooksListProps) => (
         book={book}
       />
     ))}
-    {/* <svg className="cursor" width="80" height="80" viewBox="0 0 80 80">
-      <circle className="cursor__inner" cx="40" cy="40" r="20" />
-    </svg> */}
   </section>
 );
 
