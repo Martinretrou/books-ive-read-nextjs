@@ -71,7 +71,8 @@ const Home: React.FC<HomeProps> = ({ data }) => {
 
   const allYears = useMemo(() => {
     if (books) {
-      return [...new Set(books.map((book) => book.readIn))]
+      const temp = [...books.filter((book) => book?.readIn)];
+      return [...new Set(temp.map((book) => book.readIn))]
         .sort((a, b) => (a > b ? 1 : a < b ? -1 : 0))
         .reverse();
     }
@@ -103,6 +104,13 @@ const Home: React.FC<HomeProps> = ({ data }) => {
     }),
     [data, rating, books, booksReadThisYear, setSearch, setRating],
   );
+
+  const currentlyReading = useMemo(() => {
+    if (books) {
+      return books.filter((book) => book.currentlyReading);
+    }
+    return [];
+  }, [books]);
 
   useEffect(() => {
     function handleResize() {
@@ -160,8 +168,21 @@ const Home: React.FC<HomeProps> = ({ data }) => {
         <GridOverlay />
         <Hero />
         {/* <Filters {...heroData} /> */}
-        {booksByYear.map((year) => (
-          <BooksList books={year as any} isMobile={isMobile} />
+        {currentlyReading.length > 0 && (
+          <BooksList
+            books={currentlyReading}
+            title="Currently reading"
+            isMobile={isMobile}
+            hideRating
+          />
+        )}
+        {booksByYear.map((b: Book[]) => (
+          <BooksList
+            key={b[0].readIn}
+            books={b}
+            year={b[0].readIn}
+            isMobile={isMobile}
+          />
         ))}
       </div>
     </div>

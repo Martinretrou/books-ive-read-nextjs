@@ -12,10 +12,21 @@
 .item {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   padding: 50px 0;
   align-items: center;
   cursor: crosshair;
+}
+
+.item:nth-child(even) .img {
+  grid-column: 2 / span 2;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.item:nth-child(even) .content {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 1;
 }
 
 .item.mobile {
@@ -26,10 +37,6 @@
   font-size: 30px;
 }
 
-.img {
-  margin-right: 10px;
-}
-
 .img img {
   width: calc(20vw - 3px);
   margin-bottom: 10px;
@@ -37,6 +44,7 @@
 }
 
 .content {
+  height: 100%;
   border-top: 4px solid black;
   padding-top: 2em;
   width: 95%;
@@ -44,7 +52,6 @@
   grid-template-columns: 1fr;
   align-items: center;
   z-index: 1;
-  min-height: 300px;
 }
 
 .other {

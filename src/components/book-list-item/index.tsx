@@ -9,9 +9,14 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 type BookListItemProps = {
   book: Book;
   isMobile: boolean;
+  hideRating?: boolean;
 };
 
-const BookListItem = ({ book, isMobile }: BookListItemProps) => (
+const BookListItem = ({
+  book,
+  isMobile,
+  hideRating = false,
+}: BookListItemProps) => (
   <div
     className={classNames(styles.item, `menu__item`, isMobile && styles.mobile)}
     data-img={book.image.url}
@@ -27,23 +32,25 @@ const BookListItem = ({ book, isMobile }: BookListItemProps) => (
         <p className={classNames(styles.author, `menu__item-sub`)}>
           {book.author}
         </p>
+        {book.comment && (
+          <p className={classNames(styles.comment)}>{book.comment}</p>
+        )}
       </div>
-      <div className={styles.other}>
-        <p className={styles.read}>
-          Read in <b>{book.readIn}</b>
-        </p>
-        <div className="row">
-          <ReactStars
-            className={styles.rating}
-            count={5}
-            value={Number(book.review)}
-            size={20}
-            edit={false}
-            color="#f0efef"
-            activeColor="#000"
-          />
+      {!hideRating && (
+        <div className={styles.other}>
+          <div className="row">
+            <ReactStars
+              className={styles.rating}
+              count={5}
+              value={Number(book.review)}
+              size={20}
+              edit={false}
+              color="#f0efef"
+              activeColor="#000"
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   </div>
 );
