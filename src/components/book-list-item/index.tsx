@@ -16,15 +16,9 @@ const BookListItem = ({ book, isMobile }: BookListItemProps) => (
     className={classNames(styles.item, `menu__item`, isMobile && styles.mobile)}
     data-img={book.image.url}
   >
-    {isMobile && (
-      <div className={styles.img}>
-        <LazyLoadImage
-          effect="blur"
-          src={book.image.url}
-          alt={book.image.alt}
-        />
-      </div>
-    )}
+    <div className={styles.img}>
+      <LazyLoadImage effect="blur" src={book.image.url} alt={book.image.alt} />
+    </div>
     <div className={styles.content}>
       <div className="meta">
         <p className={classNames(styles.title, `menu__item-text`)}>
@@ -38,14 +32,17 @@ const BookListItem = ({ book, isMobile }: BookListItemProps) => (
         <p className={styles.read}>
           Read in <b>{book.readIn}</b>
         </p>
-        <ReactStars
-          className={styles.rating}
-          count={5}
-          value={Number(book.review)}
-          size={12}
-          color="#f0efef"
-          activeColor="#ffd700"
-        />
+        <div className="row">
+          <ReactStars
+            className={styles.rating}
+            count={5}
+            value={Number(book.review)}
+            size={20}
+            edit={false}
+            color="#f0efef"
+            activeColor="#000"
+          />
+        </div>
       </div>
     </div>
   </div>

@@ -6,6 +6,40 @@ body {
   overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: #e1773a;
+}
+
+hr {
+  background-color: black;
+  border: none;
+  height: 4px;
+}
+
+.grid-1-cols {
+  max-width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-2-cols {
+  max-width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-4-cols {
+  max-width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 a {
@@ -56,8 +90,9 @@ a {
 
 .select__control {
   margin-top: 20px;
-  border: 2px solid black !important;
+  border: 4px solid black !important;
   border-radius: 0 !important;
+  background-color: transparent !important;
 }
 
 .select__indicator-separator {

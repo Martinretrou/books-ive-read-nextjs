@@ -1,12 +1,7 @@
 .list {
   position: relative;
-  width: 100%;
-  margin: 0 auto 10%;
-  padding: 5% 5% 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .list-total-books-shown {
@@ -18,7 +13,7 @@
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  padding: 50px 50px;
+  padding: 50px 0;
   align-items: center;
   cursor: crosshair;
 }
@@ -31,37 +26,36 @@
   font-size: 30px;
 }
 
-.item + .item {
-  margin-top: 15px;
-}
-
 .img {
-  max-height: 100px;
   margin-right: 10px;
 }
 
 .img img {
-  max-height: 100px;
-  height: 100%;
-  width: auto;
+  width: calc(20vw - 3px);
+  margin-bottom: 10px;
+  padding-bottom: 40px;
 }
 
 .content {
+  border-top: 4px solid black;
+  padding-top: 2em;
+  width: 95%;
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 1fr;
   align-items: center;
   z-index: 1;
+  min-height: 300px;
 }
 
 .other {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .title {
   font-weight: bold;
-  font-size: 4em;
+  font-size: 2.5em;
   margin-bottom: 10px;
   margin-top: unset;
   color: black;
@@ -69,75 +63,16 @@
 
 .author {
   font-weight: normal;
-  font-size: 0.8em;
+  font-size: 1.35em;
 }
 
 .read {
   text-align: right;
-  font-size: 0.8em;
-  opacity: 0.7;
+  font-size: 1em;
 }
 
 .rating {
   text-align: right;
   float: right;
-}
-
-.side {
-  height: 95%;
-  top: 1%;
-  position: absolute;
-  left: -10%;
-}
-
-.side .line {
-  position: absolute;
-  height: calc(100% - 200px);
-  top: 100px;
-  width: 1px;
-  background-color: grey;
-  opacity: 0.3;
-  left: -28px;
-}
-
-.side .latest,
-.side .oldest,
-.side .latestarrow,
-.side .oldestarrow {
-  position: absolute;
-  transform: rotate(-90deg);
-  left: -50px;
-  opacity: 0.4;
-  color: black;
-}
-
-.side .latestarrow {
-  top: 0;
-  left: -38px;
-  width: 20px;
-}
-
-.side .oldestarrow {
-  bottom: 0;
-  left: -38px;
-  width: 20px;
-  transform: rotate(90deg);
-}
-
-.side .latest {
-  top: 50px;
-}
-
-.side .oldest {
-  bottom: 40px;
-}
-
-@media screen and (max-width: 450px) {
-  .item {
-    padding: 15px 0;
-  }
-  .img img {
-    width: 66px;
-    height: 100px;
-  }
+  margin-left: 15px;
 }

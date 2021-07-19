@@ -28,7 +28,7 @@ type BooksListProps = {
 };
 
 const BooksList = ({ books, isMobile }: BooksListProps) => (
-  <section className={classNames(styles.list, `menu`)}>
+  <section className={classNames(styles.list, `menu`, `grid-2-cols`)}>
     {map(books, (book: Book, index: number) => (
       <LazyLoadComponent key={`${book?.title}-${index}`}>
         <BookListItem isMobile={isMobile} book={book} />

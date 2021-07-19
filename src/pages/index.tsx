@@ -1,11 +1,12 @@
 /* eslint-disable no-nested-ternary */
 import React, { useMemo, useState, useEffect } from 'react';
-import { BooksList, Hero } from '@/components';
+import { BooksList, Hero, Filters } from '@/components';
 import { formatBooks } from '@/helpers/book';
 import { Book } from '@/components/books-list';
 import Head from 'next/head';
 import Menu from '@/helpers/menu';
 import { NextSeo } from 'next-seo';
+import GridOverlay from '@/components/grid-overlay';
 import { client } from '../../prismic-configuration';
 import styles from '../styles/Home.module.css';
 
@@ -112,16 +113,16 @@ const Home: React.FC<HomeProps> = ({ data }) => {
     windowSize?.width,
   ]);
 
-  useEffect(() => {
-    if (typeof window !== `undefined` && !isMobile) {
-      const menuEl = document.querySelector(`.menu`);
-      // eslint-disable-next-line no-new
-      new Menu(
-        menuEl,
-        resultQuery?.map((book) => book.image.url),
-      );
-    }
-  }, [windowSize?.width, resultQuery]);
+  // useEffect(() => {
+  //   if (typeof window !== `undefined` && !isMobile) {
+  //     const menuEl = document.querySelector(`.menu`);
+  //     // eslint-disable-next-line no-new
+  //     new Menu(
+  //       menuEl,
+  //       resultQuery?.map((book) => book.image.url),
+  //     );
+  //   }
+  // }, [windowSize?.width, resultQuery]);
 
   return (
     <div className={styles.page}>
@@ -145,7 +146,9 @@ const Home: React.FC<HomeProps> = ({ data }) => {
         }}
       />
       <div className={styles.wrapper}>
-        <Hero {...heroData} />
+        <GridOverlay />
+        <Hero />
+        <Filters {...heroData} />
         <BooksList isMobile={isMobile} books={resultQuery} />
       </div>
     </div>
