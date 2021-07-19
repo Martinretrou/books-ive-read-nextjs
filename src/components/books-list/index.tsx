@@ -2,6 +2,7 @@ import map from 'lodash.map';
 import React from 'react';
 
 import classNames from 'classnames';
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import { BookListItem } from '..';
 import styles from '../../styles/BooksList.module.css';
 
@@ -29,11 +30,9 @@ type BooksListProps = {
 const BooksList = ({ books, isMobile }: BooksListProps) => (
   <section className={classNames(styles.list, `menu`)}>
     {map(books, (book: Book, index: number) => (
-      <BookListItem
-        key={`${book?.title}-${index}`}
-        isMobile={isMobile}
-        book={book}
-      />
+      <LazyLoadComponent key={`${book?.title}-${index}`}>
+        <BookListItem isMobile={isMobile} book={book} />
+      </LazyLoadComponent>
     ))}
   </section>
 );
