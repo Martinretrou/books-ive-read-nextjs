@@ -78,6 +78,17 @@ const Home: React.FC<HomeProps> = ({ data }) => {
     return [];
   }, [books]);
 
+  const booksByYear = useMemo(() => {
+    if (books && allYears) {
+      const temp = [];
+      allYears?.map((year) => {
+        temp.push(books.filter((book) => book.readIn === year.toString()));
+      });
+      return temp;
+    }
+    return [];
+  }, [books, allYears]);
+
   const heroData = useMemo(
     () => ({
       title: data?.data.hero_title[0].text,
@@ -148,8 +159,10 @@ const Home: React.FC<HomeProps> = ({ data }) => {
       <div className={styles.wrapper}>
         <GridOverlay />
         <Hero />
-        <Filters {...heroData} />
-        <BooksList isMobile={isMobile} books={resultQuery} />
+        {/* <Filters {...heroData} /> */}
+        {booksByYear.map((year) => (
+          <BooksList books={year as any} isMobile={isMobile} />
+        ))}
       </div>
     </div>
   );

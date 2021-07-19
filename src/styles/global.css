@@ -15,6 +15,12 @@ hr {
   height: 4px;
 }
 
+h2 {
+  font-size: 100px;
+  width: 80%;
+  margin: 200px auto 100px;
+}
+
 .grid-1-cols {
   max-width: 80%;
   margin: 0 auto;
