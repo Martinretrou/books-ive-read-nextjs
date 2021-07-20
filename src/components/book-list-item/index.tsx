@@ -17,7 +17,12 @@ const BookListItem = ({ book, hideRating = false }: BookListItemProps) => (
     data-img={book.image.url}
   >
     <div data-scroll data-scroll-speed="1" className={styles.img}>
-      <LazyLoadImage effect="blur" src={book.image.url} alt={book.image.alt} />
+      <LazyLoadImage
+        threshold={200}
+        effect="blur"
+        src={book.image.url}
+        alt={book.image.alt}
+      />
     </div>
     <div className={styles.content}>
       <div className="meta">
