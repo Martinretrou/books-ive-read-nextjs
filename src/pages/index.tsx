@@ -1,10 +1,9 @@
 /* eslint-disable no-nested-ternary */
 import React, { useMemo, useState, useEffect } from 'react';
-import { BooksList, Hero, Filters } from '@/components';
+import { BooksList, Hero } from '@/components';
 import { formatBooks } from '@/helpers/book';
 import { Book } from '@/components/books-list';
 import Head from 'next/head';
-import Menu from '@/helpers/menu';
 import { NextSeo } from 'next-seo';
 import GridOverlay from '@/components/grid-overlay';
 import { client } from '../../prismic-configuration';
@@ -82,7 +81,8 @@ const Home: React.FC<HomeProps> = ({ data }) => {
 
   const booksByYear = useMemo(() => {
     if (books && allYears) {
-      const temp = [];
+      const temp: any[] = [];
+      // eslint-disable-next-line array-callback-return
       allYears?.map((year) => {
         temp.push(books.filter((book) => book.readIn === year.toString()));
       });
@@ -90,21 +90,6 @@ const Home: React.FC<HomeProps> = ({ data }) => {
     }
     return [];
   }, [books, allYears]);
-
-  const heroData = useMemo(
-    () => ({
-      title: data?.data.hero_title[0].text,
-      description: data?.data.hero_description[0].text,
-      onSearchChange: setSearch,
-      onRangeChange: setRating,
-      onYearChange: setSelectedYear,
-      rating,
-      allYears,
-      totalBooks: books?.length,
-      readThisYear: booksReadThisYear,
-    }),
-    [data, rating, books, booksReadThisYear, setSearch, setRating],
-  );
 
   const currentlyReading = useMemo(() => {
     if (books) {
