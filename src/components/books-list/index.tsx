@@ -41,7 +41,7 @@ const BooksList = ({
   hideRating,
   orange,
 }: BooksListProps) => (
-  <section className={orange && styles.orange}>
+  <section className={orange ? styles.orange : ``}>
     <h2>{year || title}</h2>
     <div className={classNames(styles.list, `menu`, `grid-1-cols`)}>
       {map(books, (book: Book, index: number) => (
