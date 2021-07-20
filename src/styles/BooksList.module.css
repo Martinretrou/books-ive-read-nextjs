@@ -110,5 +110,6 @@
     width: 50vw;
     margin-bottom: 10px;
     padding-bottom: 40px;
+    min-height: 300px;
   }
 }
