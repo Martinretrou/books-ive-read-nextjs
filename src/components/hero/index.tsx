@@ -1,6 +1,4 @@
-import React, { ChangeEvent, useMemo, useState } from 'react';
-import InputRange from 'react-input-range';
-import Select from 'react-select';
+import React from 'react';
 import styles from '../../styles/Hero.module.css';
 
 export type FilterType = {
@@ -8,96 +6,29 @@ export type FilterType = {
   value: string;
 };
 
-type HeroProps = {
-  title: string;
-  description: string;
-  totalBooks?: number;
-  readThisYear?: number;
-  allYears: string[];
-  onSearchChange: (value: string) => void;
-  onYearChange: (value: string) => void;
-  onRangeChange: (range: { min: number; max: number }) => void;
-};
-
-const Hero = ({
-  allYears,
-  title,
-  description,
-  totalBooks,
-  readThisYear,
-  onSearchChange,
-  onYearChange,
-  onRangeChange,
-}: HeroProps) => {
-  const [rating, setRating] = useState<any>({ min: 0, max: 5 });
-  const handleRangeChange = (value: any) => {
-    setRating(value);
-    onRangeChange(value);
-  };
-
-  const handleYearChange = (value: string) => {
-    onYearChange(value);
-  };
-
-  const options = useMemo(
-    () => allYears.map((item) => ({ value: item, label: item })),
-    [allYears],
-  );
-
-  return (
-    <header className={styles.hero}>
-      <div className={styles.wrapper}>
-        <h1>{title}</h1>
-        <p>{description}</p>
-        <input
-          type="text"
-          placeholder="Search a book by title or author"
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onSearchChange(e?.target.value)
-          }
-        />
-        <div className={styles.stats}>
-          {readThisYear !== 0 && (
-            <p>
-              Books read so far in {new Date().getFullYear()}: {readThisYear}
-            </p>
-          )}
-          {totalBooks !== 0 && <p>Total books read: {totalBooks}</p>}
-        </div>
-      </div>
-
-      <div className={styles.filters}>
-        <div className={styles.filtersitems}>
-          <div className={styles.filter}>
-            <p className={styles.rating}>Rating</p>
-            <InputRange
-              ariaLabelledby="Input range controls"
-              ariaControls="Input range controls"
-              maxValue={5}
-              minValue={0}
-              value={rating}
-              onChange={(value) => handleRangeChange(value as any)}
-            />
-          </div>
-          <div className={styles.filter}>
-            <label htmlFor="select" className={styles.rating}>
-              Read in
-            </label>
-            <Select
-              inputId="select"
-              name="select"
-              className="select"
-              classNamePrefix="select"
-              options={[{ label: `All years`, value: false }, ...options]}
-              onChange={(value: { label: string; value: string }) =>
-                handleYearChange(value.value)
-              }
-            />
-          </div>
-        </div>
-      </div>
-    </header>
-  );
-};
+const Hero = () => (
+  <header className="grid-1-cols">
+    <div className={styles.heroContent}>
+      <h1 data-scroll data-scroll-speed="2">
+        BOOKS I'VE <br />
+        READ SINCE
+      </h1>
+      <p data-scroll data-scroll-speed="1" className={styles.year}>
+        2016
+      </p>
+      <hr />
+      <p className={styles.content}>
+        Here's a list of my latest reading. I've started recording my readings
+        in 2016 since I've fallen in the science-fiction rabbit hole.
+        <br />
+        <br />
+        The list is mostly composed of science-fiction books ranging from some
+        classics (Isaac Asimov, Frank Herbert, Dan Simmons, etc.) and some
+        recent authors (Jeff Vandermeer, Emma Newman, and more). There's also
+        some thriller, science, and others types of books.
+      </p>
+    </div>
+  </header>
+);
 
 export default Hero;

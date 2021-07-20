@@ -9,22 +9,21 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 type BookListItemProps = {
   book: Book;
   isMobile: boolean;
+  hideRating?: boolean;
 };
 
-const BookListItem = ({ book, isMobile }: BookListItemProps) => (
+const BookListItem = ({
+  book,
+  isMobile,
+  hideRating = false,
+}: BookListItemProps) => (
   <div
     className={classNames(styles.item, `menu__item`, isMobile && styles.mobile)}
     data-img={book.image.url}
   >
-    {isMobile && (
-      <div className={styles.img}>
-        <LazyLoadImage
-          effect="blur"
-          src={book.image.url}
-          alt={book.image.alt}
-        />
-      </div>
-    )}
+    <div data-scroll data-scroll-speed="1" className={styles.img}>
+      <LazyLoadImage effect="blur" src={book.image.url} alt={book.image.alt} />
+    </div>
     <div className={styles.content}>
       <div className="meta">
         <p className={classNames(styles.title, `menu__item-text`)}>
@@ -33,20 +32,25 @@ const BookListItem = ({ book, isMobile }: BookListItemProps) => (
         <p className={classNames(styles.author, `menu__item-sub`)}>
           {book.author}
         </p>
+        {book.comment && (
+          <p className={classNames(styles.comment)}>{book.comment}</p>
+        )}
       </div>
-      <div className={styles.other}>
-        <p className={styles.read}>
-          Read in <b>{book.readIn}</b>
-        </p>
-        <ReactStars
-          className={styles.rating}
-          count={5}
-          value={Number(book.review)}
-          size={12}
-          color="#f0efef"
-          activeColor="#ffd700"
-        />
-      </div>
+      {!hideRating && (
+        <div className={styles.other}>
+          <div className="row">
+            <ReactStars
+              className={styles.rating}
+              count={5}
+              value={Number(book.review)}
+              size={20}
+              edit={false}
+              color="#f0efef"
+              activeColor="#ee7b50"
+            />
+          </div>
+        </div>
+      )}
     </div>
   </div>
 );

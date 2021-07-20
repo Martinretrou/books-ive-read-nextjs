@@ -4,10 +4,11 @@ import { BooksList, Hero } from '@/components';
 import { formatBooks } from '@/helpers/book';
 import { Book } from '@/components/books-list';
 import Head from 'next/head';
-import Menu from '@/helpers/menu';
 import { NextSeo } from 'next-seo';
+import GridOverlay from '@/components/grid-overlay';
 import { client } from '../../prismic-configuration';
 import styles from '../styles/Home.module.css';
+import { SmoothScrollProvider } from '../providers/ScrollProvider';
 
 type HomeProps = {
   data: any;
@@ -70,27 +71,32 @@ const Home: React.FC<HomeProps> = ({ data }) => {
 
   const allYears = useMemo(() => {
     if (books) {
-      return [...new Set(books.map((book) => book.readIn))]
+      const temp = [...books.filter((book) => book?.readIn)];
+      return [...new Set(temp.map((book) => book.readIn))]
         .sort((a, b) => (a > b ? 1 : a < b ? -1 : 0))
         .reverse();
     }
     return [];
   }, [books]);
 
-  const heroData = useMemo(
-    () => ({
-      title: data?.data.hero_title[0].text,
-      description: data?.data.hero_description[0].text,
-      onSearchChange: setSearch,
-      onRangeChange: setRating,
-      onYearChange: setSelectedYear,
-      rating,
-      allYears,
-      totalBooks: books?.length,
-      readThisYear: booksReadThisYear,
-    }),
-    [data, rating, books, booksReadThisYear, setSearch, setRating],
-  );
+  const booksByYear = useMemo(() => {
+    if (books && allYears) {
+      const temp: any[] = [];
+      // eslint-disable-next-line array-callback-return
+      allYears?.map((year) => {
+        temp.push(books.filter((book) => book.readIn === year.toString()));
+      });
+      return temp;
+    }
+    return [];
+  }, [books, allYears]);
+
+  const currentlyReading = useMemo(() => {
+    if (books) {
+      return books.filter((book) => book.currentlyReading);
+    }
+    return [];
+  }, [books]);
 
   useEffect(() => {
     function handleResize() {
@@ -112,43 +118,68 @@ const Home: React.FC<HomeProps> = ({ data }) => {
     windowSize?.width,
   ]);
 
-  useEffect(() => {
-    if (typeof window !== `undefined` && !isMobile) {
-      const menuEl = document.querySelector(`.menu`);
-      // eslint-disable-next-line no-new
-      new Menu(
-        menuEl,
-        resultQuery?.map((book) => book.image.url),
-      );
-    }
-  }, [windowSize?.width, resultQuery]);
+  // useEffect(() => {
+  //   if (typeof window !== `undefined` && !isMobile) {
+  //     const menuEl = document.querySelector(`.menu`);
+  //     // eslint-disable-next-line no-new
+  //     new Menu(
+  //       menuEl,
+  //       resultQuery?.map((book) => book.image.url),
+  //     );
+  //   }
+  // }, [windowSize?.width, resultQuery]);
 
   return (
-    <div className={styles.page}>
-      <Head>
-        <title>Books I've read</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <NextSeo
-        title="Books I've read"
-        description="Books I've read in the previous years."
-        canonical="https://www.booksiveread.fr/"
-        openGraph={{
-          url: `https://www.booksiveread.fr/`,
-          title: `Books I've read`,
-          description: `Books I've read`,
-          site_name: `Books I've read`,
-        }}
-        twitter={{
-          handle: `@MartinRetrou`,
-          cardType: `summary_large_image`,
-        }}
-      />
-      <div className={styles.wrapper}>
-        <Hero {...heroData} />
-        <BooksList isMobile={isMobile} books={resultQuery} />
-      </div>
-    </div>
+    <main data-scroll-container className="container">
+      <SmoothScrollProvider options={{ smooth: true }}>
+        <div className={styles.page}>
+          <Head>
+            <title>Books I've read</title>
+            <meta
+              name="viewport"
+              content="initial-scale=1.0, width=device-width"
+            />
+          </Head>
+          <NextSeo
+            title="Books I've read"
+            description="Books I've read in the previous years."
+            canonical="https://www.booksiveread.fr/"
+            openGraph={{
+              url: `https://www.booksiveread.fr/`,
+              title: `Books I've read`,
+              description: `Books I've read`,
+              site_name: `Books I've read`,
+            }}
+            twitter={{
+              handle: `@MartinRetrou`,
+              cardType: `summary_large_image`,
+            }}
+          />
+          <div data-scroll-section className={styles.wrapper}>
+            <GridOverlay />
+            <Hero />
+            {/* <Filters {...heroData} /> */}
+            {currentlyReading.length > 0 && (
+              <BooksList
+                books={currentlyReading}
+                title="CURRENTLY READING"
+                isMobile={isMobile}
+                hideRating
+                orange
+              />
+            )}
+            {booksByYear.map((b: Book[]) => (
+              <BooksList
+                key={b[0].readIn}
+                books={b}
+                year={b[0].readIn}
+                isMobile={isMobile}
+              />
+            ))}
+          </div>
+        </div>
+      </SmoothScrollProvider>
+    </main>
   );
 };
 
