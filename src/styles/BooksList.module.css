@@ -1,6 +1,12 @@
 .list {
   position: relative;
-  width: 80%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.container {
+  width: 90%;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -37,14 +43,6 @@
 .item:nth-child(even) .content {
   grid-column: 1 / span 1;
   grid-row: 1 / span 1;
-}
-
-.item.mobile {
-  grid-template-columns: 1fr 4fr;
-}
-
-.item.mobile .title {
-  font-size: 30px;
 }
 
 .img img {
@@ -91,4 +89,26 @@
   text-align: right;
   float: right;
   margin-left: 15px;
+}
+
+@media screen and (max-width: 600px) {
+  .item {
+    grid-template-columns: 1fr;
+  }
+
+  .item:nth-child(even) .img {
+    grid-column: 1 / span 1;
+    justify-content: flex-start;
+  }
+
+  .item:nth-child(even) .content {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 2;
+  }
+
+  .img img {
+    width: 50vw;
+    margin-bottom: 10px;
+    padding-bottom: 40px;
+  }
 }

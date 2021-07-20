@@ -21,12 +21,30 @@ hr {
 
 h2 {
   font-size: 100px;
-  width: 80%;
+  width: 100%;
   margin: 200px auto 100px;
 }
 
+@media screen and (max-width: 1200px) {
+  h2 {
+    font-size: 70px;
+    margin: 50px auto 25px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  html,
+  body {
+    font-size: 14px;
+  }
+  h2 {
+    font-size: 50px;
+    margin: 50px auto 25px;
+  }
+}
+
 .grid-1-cols {
-  max-width: 80%;
+  max-width: 100%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -39,14 +57,14 @@ h2 {
 }
 
 .grid-2-cols {
-  max-width: 80%;
+  max-width: 100%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
 
 .grid-4-cols {
-  max-width: 80%;
+  max-width: 100%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -130,7 +148,7 @@ input {
   display: none;
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 600px) {
   .input-range {
     max-width: 95%;
   }

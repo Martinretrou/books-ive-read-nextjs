@@ -8,6 +8,10 @@
   left: 0;
 }
 
+.lines {
+  max-width: 1400px;
+}
+
 .item:nth-child(1) {
   left: 10%;
 }

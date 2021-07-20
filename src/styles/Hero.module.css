@@ -21,6 +21,11 @@
   font-weight: 600;
 }
 
+.heroContent {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .heroContent b {
   font-weight: 600;
 }
@@ -28,4 +33,25 @@
 .heroContent mark {
   background-color: transparent;
   color: black;
+}
+
+@media screen and (max-width: 1200px) {
+  .heroContent h1,
+  .year {
+    font-size: 100px;
+    line-height: 100px;
+    letter-spacing: -4px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .heroContent h1,
+  .year {
+    font-size: 65px;
+    line-height: 65px;
+    letter-spacing: -4px;
+  }
+  .year {
+    margin-bottom: 50px;
+  }
 }

@@ -114,10 +114,6 @@ const Home: React.FC<HomeProps> = ({ data }) => {
     }
   }, []);
 
-  const isMobile = useMemo(() => (windowSize?.width as any) <= 1000, [
-    windowSize?.width,
-  ]);
-
   // useEffect(() => {
   //   if (typeof window !== `undefined` && !isMobile) {
   //     const menuEl = document.querySelector(`.menu`);
@@ -156,25 +152,19 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             }}
           />
           <div data-scroll-section className={styles.wrapper}>
-            <GridOverlay />
+            {/* <GridOverlay /> */}
             <Hero />
             {/* <Filters {...heroData} /> */}
             {currentlyReading.length > 0 && (
               <BooksList
                 books={currentlyReading}
                 title="CURRENTLY READING"
-                isMobile={isMobile}
                 hideRating
                 orange
               />
             )}
             {booksByYear.map((b: Book[]) => (
-              <BooksList
-                key={b[0].readIn}
-                books={b}
-                year={b[0].readIn}
-                isMobile={isMobile}
-              />
+              <BooksList key={b[0].readIn} books={b} year={b[0].readIn} />
             ))}
           </div>
         </div>

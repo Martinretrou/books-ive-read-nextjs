@@ -8,17 +8,12 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 type BookListItemProps = {
   book: Book;
-  isMobile: boolean;
   hideRating?: boolean;
 };
 
-const BookListItem = ({
-  book,
-  isMobile,
-  hideRating = false,
-}: BookListItemProps) => (
+const BookListItem = ({ book, hideRating = false }: BookListItemProps) => (
   <div
-    className={classNames(styles.item, `menu__item`, isMobile && styles.mobile)}
+    className={classNames(styles.item, `menu__item`)}
     data-img={book.image.url}
   >
     <div data-scroll data-scroll-speed="1" className={styles.img}>
