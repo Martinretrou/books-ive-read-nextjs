@@ -21,7 +21,7 @@ const BookListItem = ({
     className={classNames(styles.item, `menu__item`, isMobile && styles.mobile)}
     data-img={book.image.url}
   >
-    <div className={styles.img}>
+    <div data-scroll data-scroll-speed="1" className={styles.img}>
       <LazyLoadImage effect="blur" src={book.image.url} alt={book.image.alt} />
     </div>
     <div className={styles.content}>
@@ -46,7 +46,7 @@ const BookListItem = ({
               size={20}
               edit={false}
               color="#f0efef"
-              activeColor="#000"
+              activeColor="#ee7b50"
             />
           </div>
         </div>

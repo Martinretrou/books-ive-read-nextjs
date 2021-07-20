@@ -30,6 +30,7 @@ type BooksListProps = {
   year?: string | number;
   title?: string;
   hideRating?: boolean;
+  orange?: boolean;
 };
 
 const BooksList = ({
@@ -38,18 +39,18 @@ const BooksList = ({
   year,
   title,
   hideRating,
+  orange,
 }: BooksListProps) => (
-  <section>
+  <section className={orange && styles.orange}>
     <h2>{year || title}</h2>
     <div className={classNames(styles.list, `menu`, `grid-1-cols`)}>
       {map(books, (book: Book, index: number) => (
-        <LazyLoadComponent key={`${book?.title}-${index}`}>
-          <BookListItem
-            hideRating={hideRating}
-            isMobile={isMobile}
-            book={book}
-          />
-        </LazyLoadComponent>
+        <BookListItem
+          key={`${book?.title}-${index}`}
+          hideRating={hideRating}
+          isMobile={isMobile}
+          book={book}
+        />
       ))}
     </div>
   </section>

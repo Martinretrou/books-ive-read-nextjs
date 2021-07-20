@@ -36,7 +36,7 @@
 .stats label {
   color: black;
   padding-top: 1em;
-  border-top: 4px solid black;
+  border-top: 16px solid black;
 }
 
 .wrapper input {
@@ -55,7 +55,7 @@
 
 .filter {
   padding-top: 1em;
-  border-top: 4px solid black;
+  border-top: 16px solid black;
 }
 
 .filterstitle {

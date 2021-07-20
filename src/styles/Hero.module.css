@@ -1,10 +1,31 @@
 .heroContent h1 {
   font-size: 175px;
-  line-height: 150px;
-  margin-left: -8px;
-  margin-bottom: 100px;
+  line-height: 170px;
+  letter-spacing: -5px;
+  margin-left: -10px;
+  font-weight: 600;
+  margin-bottom: 0;
 }
 
-.heroContent p {
+.content {
   font-size: 1.25em;
+}
+
+.year {
+  font-size: 175px;
+  line-height: 170px;
+  letter-spacing: -5px;
+  margin-top: 0;
+  margin-left: -8px;
+  margin-bottom: 100px;
+  font-weight: 600;
+}
+
+.heroContent b {
+  font-weight: 600;
+}
+
+.heroContent mark {
+  background-color: transparent;
+  color: black;
 }

@@ -9,6 +9,7 @@ import { NextSeo } from 'next-seo';
 import GridOverlay from '@/components/grid-overlay';
 import { client } from '../../prismic-configuration';
 import styles from '../styles/Home.module.css';
+import { SmoothScrollProvider } from '../providers/ScrollProvider';
 
 type HomeProps = {
   data: any;
@@ -144,48 +145,56 @@ const Home: React.FC<HomeProps> = ({ data }) => {
   // }, [windowSize?.width, resultQuery]);
 
   return (
-    <div className={styles.page}>
-      <Head>
-        <title>Books I've read</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <NextSeo
-        title="Books I've read"
-        description="Books I've read in the previous years."
-        canonical="https://www.booksiveread.fr/"
-        openGraph={{
-          url: `https://www.booksiveread.fr/`,
-          title: `Books I've read`,
-          description: `Books I've read`,
-          site_name: `Books I've read`,
-        }}
-        twitter={{
-          handle: `@MartinRetrou`,
-          cardType: `summary_large_image`,
-        }}
-      />
-      <div className={styles.wrapper}>
-        <GridOverlay />
-        <Hero />
-        {/* <Filters {...heroData} /> */}
-        {currentlyReading.length > 0 && (
-          <BooksList
-            books={currentlyReading}
-            title="Currently reading"
-            isMobile={isMobile}
-            hideRating
+    <main data-scroll-container className="container">
+      <SmoothScrollProvider options={{ smooth: true }}>
+        <div className={styles.page}>
+          <Head>
+            <title>Books I've read</title>
+            <meta
+              name="viewport"
+              content="initial-scale=1.0, width=device-width"
+            />
+          </Head>
+          <NextSeo
+            title="Books I've read"
+            description="Books I've read in the previous years."
+            canonical="https://www.booksiveread.fr/"
+            openGraph={{
+              url: `https://www.booksiveread.fr/`,
+              title: `Books I've read`,
+              description: `Books I've read`,
+              site_name: `Books I've read`,
+            }}
+            twitter={{
+              handle: `@MartinRetrou`,
+              cardType: `summary_large_image`,
+            }}
           />
-        )}
-        {booksByYear.map((b: Book[]) => (
-          <BooksList
-            key={b[0].readIn}
-            books={b}
-            year={b[0].readIn}
-            isMobile={isMobile}
-          />
-        ))}
-      </div>
-    </div>
+          <div data-scroll-section className={styles.wrapper}>
+            <GridOverlay />
+            <Hero />
+            {/* <Filters {...heroData} /> */}
+            {currentlyReading.length > 0 && (
+              <BooksList
+                books={currentlyReading}
+                title="CURRENTLY READING"
+                isMobile={isMobile}
+                hideRating
+                orange
+              />
+            )}
+            {booksByYear.map((b: Book[]) => (
+              <BooksList
+                key={b[0].readIn}
+                books={b}
+                year={b[0].readIn}
+                isMobile={isMobile}
+              />
+            ))}
+          </div>
+        </div>
+      </SmoothScrollProvider>
+    </main>
   );
 };
 
