@@ -5,6 +5,7 @@
 }
 
 .container {
+  position: relative;
   width: 90%;
   max-width: 1400px;
   margin: 0 auto;
@@ -23,6 +24,26 @@
 
 .orange .content {
   border-color: #dfdcd9;
+}
+
+.orange h2 {
+  font-size: 100px;
+  margin: 200px auto 100px;
+  opacity: 1;
+}
+
+@media screen and (max-width: 1200px) {
+  .orange h2 {
+    font-size: 70px;
+    margin: 50px auto 25px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .orange h2 {
+    font-size: 50px;
+    margin: 50px auto 25px;
+  }
 }
 
 .item {

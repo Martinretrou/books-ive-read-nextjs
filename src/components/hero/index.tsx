@@ -16,8 +16,8 @@ const Hero = () => (
       <p data-scroll data-scroll-speed="1" className={styles.year}>
         2016
       </p>
-      <hr />
-      <p className={styles.content}>
+      <hr data-scroll data-scroll-speed="1" />
+      <p data-scroll data-scroll-speed="1" className={styles.content}>
         Here's a list of my latest reading. I've started recording my readings
         in 2016 since I've fallen in the science-fiction rabbit hole.
         <br />

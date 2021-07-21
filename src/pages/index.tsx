@@ -5,10 +5,8 @@ import { formatBooks } from '@/helpers/book';
 import { Book } from '@/components/books-list';
 import Head from 'next/head';
 import { NextSeo } from 'next-seo';
-import GridOverlay from '@/components/grid-overlay';
 import { client } from '../../prismic-configuration';
 import styles from '../styles/Home.module.css';
-import { SmoothScrollProvider } from '../providers/ScrollProvider';
 
 type HomeProps = {
   data: any;
@@ -18,10 +16,6 @@ const Home: React.FC<HomeProps> = ({ data }) => {
   const [search, setSearch] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [rating, setRating] = useState<any>({ min: 0, max: 5 });
-  const [windowSize, setWindowSize] = useState({
-    width: undefined,
-    height: undefined,
-  });
 
   const books = useMemo(() => {
     if (data?.data?.books) {
@@ -98,77 +92,48 @@ const Home: React.FC<HomeProps> = ({ data }) => {
     return [];
   }, [books]);
 
-  useEffect(() => {
-    function handleResize() {
-      if (typeof window !== `undefined`) {
-        setWindowSize({
-          width: window.innerWidth as any,
-          height: window.innerHeight as any,
-        });
-      }
-    }
-    if (typeof window !== `undefined`) {
-      window.addEventListener(`resize`, handleResize);
-      handleResize();
-      return () => window.removeEventListener(`resize`, handleResize);
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   if (typeof window !== `undefined` && !isMobile) {
-  //     const menuEl = document.querySelector(`.menu`);
-  //     // eslint-disable-next-line no-new
-  //     new Menu(
-  //       menuEl,
-  //       resultQuery?.map((book) => book.image.url),
-  //     );
-  //   }
-  // }, [windowSize?.width, resultQuery]);
-
   return (
-    <main data-scroll-container className="container">
-      <SmoothScrollProvider options={{ smooth: true }}>
-        <div className={styles.page}>
-          <Head>
-            <title>Books I've read</title>
-            <meta
-              name="viewport"
-              content="initial-scale=1.0, width=device-width"
-            />
-          </Head>
-          <NextSeo
-            title="Books I've read"
-            description="Books I've read in the previous years."
-            canonical="https://www.booksiveread.fr/"
-            openGraph={{
-              url: `https://www.booksiveread.fr/`,
-              title: `Books I've read`,
-              description: `Books I've read`,
-              site_name: `Books I've read`,
-            }}
-            twitter={{
-              handle: `@MartinRetrou`,
-              cardType: `summary_large_image`,
-            }}
+    <main className="container">
+      <div data-scroll-container className={styles.page}>
+        <Head>
+          <title>Books I've read</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
           />
-          <div data-scroll-section className={styles.wrapper}>
-            {/* <GridOverlay /> */}
-            <Hero />
-            {/* <Filters {...heroData} /> */}
-            {currentlyReading.length > 0 && (
-              <BooksList
-                books={currentlyReading}
-                title="CURRENTLY READING"
-                hideRating
-                orange
-              />
-            )}
-            {booksByYear.map((b: Book[]) => (
-              <BooksList key={b[0].readIn} books={b} year={b[0].readIn} />
-            ))}
-          </div>
+        </Head>
+        <NextSeo
+          title="Books I've read"
+          description="Books I've read in the previous years."
+          canonical="https://www.booksiveread.fr/"
+          openGraph={{
+            url: `https://www.booksiveread.fr/`,
+            title: `Books I've read`,
+            description: `Books I've read`,
+            site_name: `Books I've read`,
+          }}
+          twitter={{
+            handle: `@MartinRetrou`,
+            cardType: `summary_large_image`,
+          }}
+        />
+        <div data-scroll-section className={styles.wrapper}>
+          {/* <GridOverlay /> */}
+          <Hero />
+          {/* <Filters {...heroData} /> */}
+          {currentlyReading.length > 0 && (
+            <BooksList
+              books={currentlyReading}
+              title="CURRENTLY READING"
+              hideRating
+              orange
+            />
+          )}
+          {booksByYear.map((b: Book[]) => (
+            <BooksList key={b[0].readIn} books={b} year={b[0].readIn} />
+          ))}
         </div>
-      </SmoothScrollProvider>
+      </div>
     </main>
   );
 };

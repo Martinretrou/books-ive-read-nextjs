@@ -19,16 +19,20 @@ hr {
   height: 16px;
 }
 
-h2 {
-  font-size: 100px;
-  width: 100%;
-  margin: 200px auto 100px;
+.list-title {
+  position: sticky;
+  top: 0;
+  display: block;
+  font-size: 45vw;
+  width: calc(100% + 10%);
+  margin: 200px auto 100px -12%;
+  opacity: 0.1;
 }
 
 @media screen and (max-width: 1200px) {
-  h2 {
-    font-size: 70px;
-    margin: 50px auto 25px;
+  .list-title {
+    font-size: 45vw;
+    margin: 50px auto 25px -10%;
   }
 }
 
@@ -37,9 +41,9 @@ h2 {
   body {
     font-size: 14px;
   }
-  h2 {
-    font-size: 50px;
-    margin: 50px auto 25px;
+  .list-title {
+    font-size: 45vw;
+    margin: 50px auto 25px -10%;
   }
 }
 
