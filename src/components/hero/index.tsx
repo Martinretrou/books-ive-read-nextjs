@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import styles from '../../styles/Hero.module.css';
 
@@ -7,7 +8,7 @@ export type FilterType = {
 };
 
 const Hero = () => (
-  <header className="grid-1-cols">
+  <header className={classNames(`grid-1-cols`, `hero`)}>
     <div className={styles.heroContent}>
       <h1 data-scroll data-scroll-speed="2">
         BOOKS I'VE <br />

@@ -6,7 +6,7 @@ body {
   overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: #dfdcd9;
+  background: #dfdcd9;
 }
 
 h1 {
@@ -17,6 +17,14 @@ hr {
   background-color: black;
   border: none;
   height: 16px;
+}
+
+.hero {
+  background: #dfdcd9;
+  background-image: radial-gradient(#808080 5%, transparent 0);
+  background-size: 30px 30px;
+  height: 100%;
+  padding-bottom: 100px;
 }
 
 .list-title {
