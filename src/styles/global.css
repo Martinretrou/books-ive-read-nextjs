@@ -17,3 +17,23 @@ h1,
 h2 {
   font-family: 'Libre Baskerville', serif;
 }
+
+.page {
+  width: 100%;
+  padding: 0 30px;
+  box-sizing: border-box;
+}
+
+.wrapper {
+  min-height: 100vh;
+  border-top: 1px solid transparent;
+  border-left: 1px solid #bdbdbd;
+  border-right: 1px solid #bdbdbd;
+}
+
+.header {
+  margin-top: 80px;
+  padding: 30px;
+  border-top: 1px solid #bdbdbd;
+  border-bottom: 1px solid #bdbdbd;
+}

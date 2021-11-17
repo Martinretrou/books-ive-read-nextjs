@@ -1,0 +1,14 @@
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.stat {
+  padding: 30px;
+  border-right: 1px solid #bdbdbd;
+}
+
+.form {
+  padding: 30px;
+}

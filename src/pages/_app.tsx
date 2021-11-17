@@ -3,6 +3,7 @@ import '@/styles/global.css';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
+import '@/../firebase';
 import * as ga from '../lib/ga';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
