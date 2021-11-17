@@ -1,14 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import React, { useMemo, useState } from 'react';
 import { BooksList, Filters, Hero } from '@/components';
-import { formatBooks } from '@/helpers/book';
-import { Book } from '@/components/books-list';
 import Head from 'next/head';
 import { NextSeo } from 'next-seo';
-import { client } from '../../prismic-configuration';
+import { db } from '@/../firebase';
+import { IBook } from '@/../types/book';
 
 type HomeProps = {
-  data: any;
+  data: IBook[];
 };
 
 const Home: React.FC<HomeProps> = ({ data }) => {
@@ -18,20 +17,13 @@ const Home: React.FC<HomeProps> = ({ data }) => {
   const [rating, setRating] = useState<number | null>(null);
 
   const books = useMemo(() => {
-    if (data?.data?.books) {
-      return formatBooks(data?.data?.books)
-        .sort((a: Book, b: Book) =>
-          a.readIn > b.readIn ? -1 : a.readIn < b.readIn ? 1 : 0,
-        )
-        .filter((book) => {
-          if (rating) {
-            return Number(book.review) === rating;
-          }
-          return book;
-        });
+    if (data) {
+      return data.sort((a: IBook, b: IBook) =>
+        a.readIn > b.readIn ? -1 : a.readIn < b.readIn ? 1 : 0,
+      );
     }
     return [];
-  }, [data, rating]);
+  }, [data]);
 
   const allYears = useMemo(() => {
     if (books) {
@@ -124,7 +116,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             onRangeChange={setRating}
             onYearChange={setSelectedYear}
           />
-          {booksByYear.map((b: Book[]) => (
+          {booksByYear.map((b: IBook[]) => (
             <BooksList key={b[0]?.readIn} books={b} year={b[0]?.readIn} />
           ))}
         </div>
@@ -134,9 +126,11 @@ const Home: React.FC<HomeProps> = ({ data }) => {
 };
 
 export async function getServerSideProps() {
-  const data = await client.getSingle(`homepage`, {});
+  const ref = db.ref(`books/`);
+  const snapshot = await ref.once(`value`);
+  const books = Object.values(snapshot.val()) || [];
 
-  return { props: { data } };
+  return { props: { data: books } };
 }
 
 export default Home;
