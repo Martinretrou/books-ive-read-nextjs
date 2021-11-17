@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
-import React, { useMemo, useState, useEffect } from 'react';
-import { BooksList, Hero } from '@/components';
+import React, { useMemo, useState } from 'react';
+import { BooksList, Filters, Hero } from '@/components';
 import { formatBooks } from '@/helpers/book';
 import { Book } from '@/components/books-list';
 import Head from 'next/head';
@@ -15,7 +15,8 @@ type HomeProps = {
 const Home: React.FC<HomeProps> = ({ data }) => {
   const [search, setSearch] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
-  const [rating, setRating] = useState<any>({ min: 0, max: 5 });
+  const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null);
+  const [rating, setRating] = useState<number | null>(null);
 
   const books = useMemo(() => {
     if (data?.data?.books) {
@@ -23,45 +24,15 @@ const Home: React.FC<HomeProps> = ({ data }) => {
         .sort((a: Book, b: Book) =>
           a.readIn > b.readIn ? -1 : a.readIn < b.readIn ? 1 : 0,
         )
-        .filter(
-          (book) =>
-            Number(book.review) <= Number(rating.max) &&
-            Number(book.review) >= Number(rating.min),
-        );
+        .filter((book) => {
+          if (rating) {
+            return Number(book.review) === rating;
+          }
+          return book;
+        });
     }
     return [];
   }, [data, rating]);
-
-  const booksReadThisYear = useMemo(
-    () =>
-      books?.filter(
-        (book: Book) => book.readIn === String(new Date().getFullYear()),
-      ).length,
-    [books],
-  );
-
-  const filteredBooksBySelectedYear = useMemo(() => {
-    if (selectedYear && books) {
-      return books.filter((book) => book.readIn === selectedYear.toString());
-    }
-    return books;
-  }, [selectedYear, books]);
-
-  const resultQuery = useMemo(() => {
-    if (search) {
-      return filteredBooksBySelectedYear?.filter((book: Book) =>
-        search
-          .toLowerCase()
-          .split(` `)
-          .every(
-            (v) =>
-              book?.title?.toLowerCase().includes(v) ||
-              book?.author?.toLowerCase().includes(v),
-          ),
-      );
-    }
-    return filteredBooksBySelectedYear;
-  }, [search, books, filteredBooksBySelectedYear]);
 
   const allYears = useMemo(() => {
     if (books) {
@@ -73,28 +44,55 @@ const Home: React.FC<HomeProps> = ({ data }) => {
     return [];
   }, [books]);
 
+  const allAuthors = useMemo(() => {
+    if (books) {
+      const temp = [...books.filter((book) => book?.author)];
+      return [...new Set(temp.map((book) => book.author))];
+    }
+    return [];
+  }, [books]);
+
   const booksByYear = useMemo(() => {
     if (books && allYears) {
       const temp: any[] = [];
       // eslint-disable-next-line array-callback-return
       allYears?.map((year) => {
-        temp.push(books.filter((book) => book.readIn === year.toString()));
+        let nextBooks = books.filter((book) => book.readIn === year.toString());
+        if (rating) {
+          nextBooks = nextBooks.filter(
+            (book) => Number(book.review) === rating,
+          );
+        }
+        if (search) {
+          nextBooks = nextBooks.filter((book) =>
+            search
+              .toLowerCase()
+              .split(` `)
+              .every(
+                (v) =>
+                  book?.title?.toLowerCase().includes(v) ||
+                  book?.author?.toLowerCase().includes(v),
+              ),
+          );
+        }
+        if (selectedAuthor) {
+          nextBooks = nextBooks.filter(
+            (book) => book.author === selectedAuthor,
+          );
+        }
+        if (selectedYear) {
+          nextBooks = nextBooks.filter((book) => book.readIn === selectedYear);
+        }
+        temp.push(nextBooks);
       });
       return temp;
     }
     return [];
-  }, [books, allYears]);
-
-  const currentlyReading = useMemo(() => {
-    if (books) {
-      return books.filter((book) => book.currentlyReading);
-    }
-    return [];
-  }, [books]);
+  }, [books, allYears, rating, search, selectedAuthor, selectedYear]);
 
   return (
     <main className="container">
-      <div data-scroll-container className={styles.page}>
+      <div className={styles.page}>
         <Head>
           <title>Books I've read</title>
           <meta
@@ -117,20 +115,18 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             cardType: `summary_large_image`,
           }}
         />
-        <div data-scroll-section className={styles.wrapper}>
-          {/* <GridOverlay /> */}
+        <div className={styles.wrapper}>
           <Hero />
-          {/* <Filters {...heroData} /> */}
-          {currentlyReading.length > 0 && (
-            <BooksList
-              books={currentlyReading}
-              title="CURRENTLY READING"
-              hideRating
-              orange
-            />
-          )}
+          <Filters
+            years={allYears}
+            authors={allAuthors}
+            onSearchChange={setSearch}
+            onAuthorChange={setSelectedAuthor}
+            onRangeChange={setRating}
+            onYearChange={setSelectedYear}
+          />
           {booksByYear.map((b: Book[]) => (
-            <BooksList key={b[0].readIn} books={b} year={b[0].readIn} />
+            <BooksList key={b[0]?.readIn} books={b} year={b[0]?.readIn} />
           ))}
         </div>
       </div>
