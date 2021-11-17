@@ -28,28 +28,20 @@ type BooksListProps = {
   year?: string | number;
   title?: string;
   hideRating?: boolean;
-  orange?: boolean;
 };
 
-const BooksList = ({
-  books,
-  year,
-  title,
-  hideRating,
-  orange,
-}: BooksListProps) => (
-  <div className={classNames(orange ? styles.orange : ``)}>
-    <div className={styles.container}>
-      <h2 className="list-title">{year || title}</h2>
-      <div className={classNames(styles.list, `menu`, `grid-1-cols`)}>
-        {map(books, (book: Book, index: number) => (
-          <BookListItem
-            key={`${book?.title}-${index}`}
-            hideRating={hideRating}
-            book={book}
-          />
-        ))}
-      </div>
+const BooksList = ({ books, year, title, hideRating }: BooksListProps) => (
+  <div className={styles.container}>
+    <h2 className={styles.year}>{year || title}</h2>
+    <div className={classNames(styles.list, `menu`, `grid-1-cols`)}>
+      {map(books, (book: Book, index: number) => (
+        <BookListItem
+          key={`${book?.title}-${index}`}
+          hideRating={hideRating}
+          book={book}
+          priority={index === 0}
+        />
+      ))}
     </div>
   </div>
 );

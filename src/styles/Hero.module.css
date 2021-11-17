@@ -1,58 +1,38 @@
+.hero {
+  width: 100%;
+}
+
 .heroContent h1 {
-  font-size: 175px;
-  line-height: 170px;
+  font-size: 80px;
   letter-spacing: -5px;
-  margin-left: -10px;
   font-weight: 600;
-  margin-bottom: 0;
 }
 
-.content {
-  font-size: 1.25em;
+.heroContent h1 mark {
+  background-color: transparent;
+  color: #595959;
 }
 
-.year {
-  font-size: 175px;
-  line-height: 170px;
-  letter-spacing: -5px;
-  margin-top: 0;
-  margin-left: -8px;
-  margin-bottom: 100px;
-  font-weight: 600;
+.heroTitle {
+  border-right: 1px solid #bdbdbd;
 }
 
 .heroContent {
-  width: 90%;
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  border-bottom: 1px solid #bdbdbd;
+  border-top: 1px solid #bdbdbd;
+  margin-top: 80px;
 }
 
-.heroContent b {
-  font-weight: 600;
+.heroTitle,
+.heroDescription {
+  padding: 30px;
 }
 
-.heroContent mark {
-  background-color: transparent;
-  color: black;
-}
-
-@media screen and (max-width: 1200px) {
-  .heroContent h1,
-  .year {
-    font-size: 100px;
-    line-height: 100px;
-    letter-spacing: -4px;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .heroContent h1,
-  .year {
-    font-size: 65px;
-    line-height: 65px;
-    letter-spacing: -4px;
-  }
-  .year {
-    margin-bottom: 50px;
-  }
+.heroDescription {
+  font-family: 'Libre Baskerville', serif;
+  color: #595959;
 }

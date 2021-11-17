@@ -1,68 +1,47 @@
-.hero {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.hero h1 {
-  font-size: 2.35em;
-  font-weight: bold;
-  margin-bottom: 0.5em;
-}
-
-.wrapper p {
-  font-size: 1.25em;
-  color: black;
-}
-
-.wrapper {
-  padding: 0 0;
-  width: 80%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.stats {
-  margin-top: 30px;
+.content {
+  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 20px;
-  font-size: 0.7em;
-  opacity: 0.9;
+  grid-template-columns: 1fr 8fr;
+  align-items: center;
+  justify-items: center;
+  border-bottom: 1px solid #bdbdbd;
 }
 
-.stats p,
-.stats label {
-  color: black;
-  padding-top: 1em;
-  border-top: 16px solid black;
+.title,
+.filters {
+  width: 100%;
+  padding: 20px;
 }
 
-.wrapper input {
-  height: 50px;
-  padding: 0 20px;
-  border: 4px solid black;
-  background-color: transparent;
+.title {
+  border-right: 1px solid #bdbdbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
 }
 
 .filters {
   position: relative;
   z-index: 2;
-  width: 80%;
-  margin: 80px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 20px;
+  align-items: center;
 }
 
-.filter {
-  padding-top: 1em;
-  border-top: 16px solid black;
+.search {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  background-color: white;
+  border: 1px solid #bdbdbd;
+  border-radius: 4px;
 }
 
-.filterstitle {
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: bold;
-  margin-bottom: 40px;
+.filters input {
+  font-family: sans-serif;
+  font-size: 16px;
 }
 
 .filtersitems {
@@ -70,36 +49,4 @@
   display: grid;
   grid-gap: 20px;
   grid-template-columns: 1fr 1fr;
-}
-
-.rating {
-  font-size: 14px;
-  margin-bottom: 30px;
-}
-
-@media screen and (max-width: 750px) {
-  .stats {
-    grid-template-columns: 1fr 1fr;
-  }
-  .filtersitems {
-    grid-template-columns: 1fr;
-    row-gap: 60px;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .wrapper p {
-    display: none;
-  }
-  .wrapper,
-  .filters {
-    padding: 0;
-  }
-  .filters {
-    margin-top: 20px;
-    margin-bottom: 60px;
-  }
-  .filter {
-    padding-top: 0;
-  }
 }
