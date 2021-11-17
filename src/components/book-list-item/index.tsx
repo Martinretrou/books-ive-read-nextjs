@@ -1,11 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 import Image from 'next/image';
-import { Book } from '../books-list';
+import { IBook } from '@/../types/book';
 import styles from '../../styles/BooksList.module.css';
 
 type BookListItemProps = {
-  book: Book;
+  book: IBook;
   hideRating?: boolean;
   priority?: boolean;
 };

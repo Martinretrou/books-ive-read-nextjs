@@ -2,6 +2,7 @@ import map from 'lodash.map';
 import React from 'react';
 
 import classNames from 'classnames';
+import { IBook } from '@/../types/book';
 import { BookListItem } from '..';
 import styles from '../../styles/BooksList.module.css';
 
@@ -24,7 +25,7 @@ export type Book = {
 };
 
 type BooksListProps = {
-  books: Book[];
+  books: IBook[];
   year?: string | number;
   title?: string;
   hideRating?: boolean;
@@ -34,7 +35,7 @@ const BooksList = ({ books, year, title, hideRating }: BooksListProps) => (
   <div className={styles.container}>
     <h2 className={styles.year}>{year || title}</h2>
     <div className={classNames(styles.list, `menu`, `grid-1-cols`)}>
-      {map(books, (book: Book, index: number) => (
+      {map(books, (book: IBook, index: number) => (
         <BookListItem
           key={`${book?.title}-${index}`}
           hideRating={hideRating}

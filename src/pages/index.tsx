@@ -1,7 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useMemo, useState } from 'react';
 import { BooksList, Filters, Hero } from '@/components';
-import { Book } from '@/components/books-list';
 import Head from 'next/head';
 import { NextSeo } from 'next-seo';
 import { db } from '@/../firebase';
@@ -19,7 +18,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
 
   const books = useMemo(() => {
     if (data) {
-      return data.sort((a: Book, b: Book) =>
+      return data.sort((a: IBook, b: IBook) =>
         a.readIn > b.readIn ? -1 : a.readIn < b.readIn ? 1 : 0,
       );
     }
@@ -117,7 +116,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             onRangeChange={setRating}
             onYearChange={setSelectedYear}
           />
-          {booksByYear.map((b: Book[]) => (
+          {booksByYear.map((b: IBook[]) => (
             <BooksList key={b[0]?.readIn} books={b} year={b[0]?.readIn} />
           ))}
         </div>
