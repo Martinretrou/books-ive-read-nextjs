@@ -5,4 +5,13 @@ module.exports = {
   images: {
     domains: ['images.prismic.io'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/admin',
+        destination: '/admin/auth',
+        permanent: true,
+      },
+    ];
+  },
 };

@@ -6,7 +6,6 @@ import { Book } from '@/components/books-list';
 import Head from 'next/head';
 import { NextSeo } from 'next-seo';
 import { client } from '../../prismic-configuration';
-import styles from '../styles/Home.module.css';
 
 type HomeProps = {
   data: any;
@@ -92,7 +91,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
 
   return (
     <main className="container">
-      <div className={styles.page}>
+      <div className="page">
         <Head>
           <title>Books I've read</title>
           <meta
@@ -115,7 +114,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             cardType: `summary_large_image`,
           }}
         />
-        <div className={styles.wrapper}>
+        <div className="wrapper">
           <Hero />
           <Filters
             years={allYears}
