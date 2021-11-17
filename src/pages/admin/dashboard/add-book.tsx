@@ -61,4 +61,6 @@ const AddBook: React.FC = () => {
   );
 };
 
+export async function getServerSideProps() {}
+
 export default AddBook;
