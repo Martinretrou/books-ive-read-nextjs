@@ -40,6 +40,8 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export async function getServerSideProps() {}
+export async function getServerSideProps() {
+  return {};
+}
 
 export default Dashboard;

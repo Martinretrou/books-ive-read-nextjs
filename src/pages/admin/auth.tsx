@@ -42,6 +42,8 @@ const Auth: React.FC = () => {
   );
 };
 
-export async function getServerSideProps() {}
+export async function getServerSideProps() {
+  return {};
+}
 
 export default Auth;
