@@ -6,6 +6,7 @@
   font-size: 80px;
   letter-spacing: -5px;
   font-weight: 600;
+  margin: 0;
 }
 
 .heroContent h1 mark {
@@ -35,4 +36,24 @@
 .heroDescription {
   font-family: 'Libre Baskerville', serif;
   color: #595959;
+}
+
+.heroDescription p {
+  margin: 0;
+}
+
+@media screen and (max-width: 1100px) {
+  .heroContent {
+    grid-template-columns: 1fr;
+  }
+  .heroTitle {
+    border-right: 0;
+    border-bottom: 1px solid #bdbdbd;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .heroContent h1 {
+    font-size: 50px;
+  }
 }

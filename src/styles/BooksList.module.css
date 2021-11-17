@@ -31,15 +31,6 @@
   border-left: 1px solid #bdbdbd;
 }
 
-.img {
-  position: relative;
-  width: 280px;
-}
-
-.img img {
-  width: 280px;
-}
-
 .content {
   height: 100%;
   display: flex;
@@ -83,4 +74,31 @@
   font-size: 22px;
   line-height: 22px;
   margin-bottom: 0;
+}
+
+@media screen and (max-width: 1100px) {
+  .year {
+    font-size: 50px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  .year {
+    z-index: 2;
+    top: 0;
+    margin: 0;
+    border-bottom: 1px solid #bdbdbd;
+    background-color: #ecece9;
+    font-size: 40px;
+    padding: 10px 0;
+  }
+  .item {
+    grid-template-columns: 1fr;
+    row-gap: 30px;
+    justify-self: center;
+    border-left: 0;
+  }
 }
