@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { createRef, useMemo, useState } from 'react';
 import { IBook } from '@/../types/book';
 import Select from 'react-select';
@@ -96,7 +98,7 @@ const BookForm = ({ authors, book, onSubmit }: BookFormProps) => {
           />
           {!filePreview && (
             <div
-              onClick={() => file.current.click()}
+              onClick={() => file?.current?.click()}
               className={styles.fakeFileInput}
             >
               <p>Click here to add the book cover</p>
@@ -147,7 +149,7 @@ const BookForm = ({ authors, book, onSubmit }: BookFormProps) => {
               <Toggle
                 defaultChecked={currentlyReading}
                 icons={false}
-                onChange={setCurrentlyReading}
+                onChange={setCurrentlyReading as any}
               />
               <span>Currently reading this book</span>
             </div>
