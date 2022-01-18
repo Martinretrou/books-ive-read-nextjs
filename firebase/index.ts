@@ -1,6 +1,7 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/database';
+import 'firebase/compat/storage';
 
 export const config = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -17,6 +18,7 @@ if (!firebase.apps.length) {
 }
 const auth = firebase.auth();
 const db = firebase.database();
+const storage = firebase.storage();
 
 const signInWithEmailAndPassword = async (email: string, password: string) => {
   try {
@@ -29,4 +31,4 @@ const signInWithEmailAndPassword = async (email: string, password: string) => {
 const logout = () => {
   auth.signOut();
 };
-export { auth, firebase, db, signInWithEmailAndPassword, logout };
+export { auth, firebase, db, storage, signInWithEmailAndPassword, logout };

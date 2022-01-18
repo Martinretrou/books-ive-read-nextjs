@@ -1,12 +1,17 @@
-import { auth } from '@/../firebase';
+import { auth, db } from '@/../firebase';
 import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import styles from '@/styles/Dashboard.module.css';
+import { IBook } from '@/../types/book';
 
-const Dashboard: React.FC = () => {
+type DashboardProps = {
+  books: IBook[];
+};
+
+const Dashboard = ({ books }: DashboardProps) => {
   const router = useRouter();
   const [user] = useAuthState(auth as any);
 
@@ -30,7 +35,9 @@ const Dashboard: React.FC = () => {
           </header>
           <div className={styles.stats}>
             <div className={styles.stat}>
-              <p>Total books: </p>
+              <p>
+                Total books: <b>{books?.length}</b>
+              </p>
             </div>
           </div>
           <Link href="/admin/dashboard/add-book">Add book</Link>
@@ -41,7 +48,11 @@ const Dashboard: React.FC = () => {
 };
 
 export async function getServerSideProps() {
-  return {};
+  const ref = db.ref(`books/`);
+  const snapshot = await ref.once(`value`);
+  const books = Object.values(snapshot.val()) || [];
+
+  return { props: { books } };
 }
 
 export default Dashboard;

@@ -3,7 +3,7 @@ module.exports = {
     webpack5: true,
   },
   images: {
-    domains: ['images.prismic.io'],
+    domains: ['images.prismic.io', 'firebasestorage.googleapis.com'],
   },
   async redirects() {
     return [

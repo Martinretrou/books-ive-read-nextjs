@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { NextSeo } from 'next-seo';
 import { db } from '@/../firebase';
 import { IBook } from '@/../types/book';
+import { getAuthorsFromBooks } from '@/helpers/book';
 
 type HomeProps = {
   data: IBook[];
@@ -28,27 +29,23 @@ const Home: React.FC<HomeProps> = ({ data }) => {
   const allYears = useMemo(() => {
     if (books) {
       const temp = [...books.filter((book) => book?.readIn)];
-      return [...new Set(temp.map((book) => book.readIn))]
+      return [...new Set(temp.map((book) => String(book.readIn)))]
         .sort((a, b) => (a > b ? 1 : a < b ? -1 : 0))
         .reverse();
     }
     return [];
   }, [books]);
 
-  const allAuthors = useMemo(() => {
-    if (books) {
-      const temp = [...books.filter((book) => book?.author)];
-      return [...new Set(temp.map((book) => book.author))];
-    }
-    return [];
-  }, [books]);
+  const allAuthors = useMemo(() => getAuthorsFromBooks(books), [books]);
 
   const booksByYear = useMemo(() => {
     if (books && allYears) {
       const temp: any[] = [];
       // eslint-disable-next-line array-callback-return
       allYears?.map((year) => {
-        let nextBooks = books.filter((book) => book.readIn === year.toString());
+        let nextBooks = books.filter(
+          (book) => String(book.readIn) === String(year),
+        );
         if (rating) {
           nextBooks = nextBooks.filter(
             (book) => Number(book.review) === rating,

@@ -1,3 +1,4 @@
+import { ratingOptions } from '@/helpers/book';
 import React, { ChangeEvent, useMemo } from 'react';
 import Select from 'react-select';
 import styles from '../../styles/Filters.module.css';
@@ -43,14 +44,6 @@ const Filters = ({
     () => authors?.map((item) => ({ value: item, label: item })),
     [authors],
   );
-
-  const ratingOptions = [
-    { value: 1, label: 1 },
-    { value: 2, label: 2 },
-    { value: 3, label: 3 },
-    { value: 4, label: 4 },
-    { value: 5, label: 5 },
-  ];
 
   return (
     <div className={styles.content}>
