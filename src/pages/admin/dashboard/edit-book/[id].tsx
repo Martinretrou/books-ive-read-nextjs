@@ -58,7 +58,12 @@ const EditBook = ({ books, book }: EditBookProps) => {
   };
 
   const deleteBook = () => {
-    db.ref(`books/${book.id}`).remove();
+    const promise = db.ref(`books/${book.id}`).remove();
+    toast.promise(promise, {
+      loading: `Loading...`,
+      success: `Successfully deleted the book !`,
+      error: `Error when deleting the book`,
+    });
   };
 
   return (

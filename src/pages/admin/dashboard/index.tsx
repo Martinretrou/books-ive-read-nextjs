@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import styles from '@/styles/Dashboard.module.css';
 import { IBook } from '@/../types/book';
+import { BooksByYearChart, MostReadAuthorBarChart } from '@/components';
 
 type DashboardProps = {
   books: IBook[];
@@ -21,8 +22,6 @@ const Dashboard = ({ books }: DashboardProps) => {
     }
   }, [user]);
 
-  console.log({ books });
-
   return (
     <main>
       <NextSeo
@@ -35,14 +34,12 @@ const Dashboard = ({ books }: DashboardProps) => {
             <h1>Dashboard</h1>
             <p>Logged as: {user?.email}</p>
           </header>
-          <div className={styles.stats}>
-            <div className={styles.stat}>
+          <div className={styles.actions}>
+            <div className={styles.action}>
               <p>
                 Total books: <b>{books?.length}</b>
               </p>
             </div>
-          </div>
-          <div className={styles.actions}>
             <div className={styles.action}>
               <Link href="/admin/dashboard/add-book">
                 <a>
@@ -57,6 +54,10 @@ const Dashboard = ({ books }: DashboardProps) => {
                 </a>
               </Link>
             </div>
+          </div>
+          <div className={styles.graphs}>
+            <BooksByYearChart books={books} />
+            <MostReadAuthorBarChart books={books} />
           </div>
         </div>
       </div>

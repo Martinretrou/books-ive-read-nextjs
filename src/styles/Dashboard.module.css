@@ -28,3 +28,8 @@
 .action button {
   width: 100%;
 }
+
+.graphs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

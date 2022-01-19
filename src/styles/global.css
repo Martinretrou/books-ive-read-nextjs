@@ -11,10 +11,6 @@ body {
 
 * {
   box-sizing: border-box;
-}
-
-h1,
-h2 {
   font-family: 'Libre Baskerville', serif;
 }
 
@@ -33,7 +29,7 @@ button {
 }
 
 button:hover {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
 .btn-disabled {
@@ -45,6 +41,25 @@ button:hover {
 .container {
   padding: 30px;
   border-bottom: 1px solid #bdbdbd;
+}
+
+.chart {
+  padding: 30px;
+  width: 100%;
+  font-family: 'Libre Baskerville', serif;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.chart:not(:last-child) {
+  border-right: 1px solid #bdbdbd;
+}
+
+.chart-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .link {
@@ -91,6 +106,10 @@ button:hover {
   background-color: white;
   border: 1px solid #bdbdbd;
   border-radius: 4px;
+}
+
+input {
+  font-family: 'Libre Baskerville', serif;
 }
 
 /* react toggle */

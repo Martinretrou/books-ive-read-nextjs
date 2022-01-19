@@ -4,5 +4,16 @@ import BooksList from './books-list';
 import BookListItem from './book-list-item';
 import BookForm from './book-form';
 import BookTable from './book-table';
+import BooksByYearChart from './books-by-year-chart';
+import MostReadAuthorBarChart from './most-read-author-bar-chart';
 
-export { BookTable, BookForm, BooksList, BookListItem, Hero, Filters };
+export {
+  BooksByYearChart,
+  MostReadAuthorBarChart,
+  BookTable,
+  BookForm,
+  BooksList,
+  BookListItem,
+  Hero,
+  Filters,
+};
