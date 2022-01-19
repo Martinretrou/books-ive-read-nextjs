@@ -8,6 +8,7 @@ import { BookForm } from '@/components';
 import { IBook } from '@/../types/book';
 import { getAuthorsFromBooks } from '@/helpers/book';
 import { v4 as uuidv4 } from 'uuid';
+import toast, { Toaster } from 'react-hot-toast';
 
 type AddBookProps = {
   books: IBook[];
@@ -34,12 +35,17 @@ const AddBook = ({ books }: AddBookProps) => {
 
     uploadTask.on(`state_changed`, console.log, console.error, () => {
       ref.getDownloadURL().then((url) => {
-        db.ref(`books/${uuid}`).set({
+        const promise = db.ref(`books/${uuid}`).set({
           ...rest,
           image: {
             url,
             alt: image.alt,
           },
+        });
+        toast.promise(promise, {
+          loading: `Loading...`,
+          success: `Successfully added the book !`,
+          error: `Error when adding the book`,
         });
       });
     });
@@ -63,6 +69,7 @@ const AddBook = ({ books }: AddBookProps) => {
           <BookForm onSubmit={submitBook} authors={authors} />
         </div>
       </div>
+      <Toaster />
     </main>
   );
 };
