@@ -16,7 +16,7 @@ const Auth: React.FC = () => {
   }, [user, error, loading]);
 
   return (
-    <main className="container">
+    <main>
       <form>
         <input
           type="text"

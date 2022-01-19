@@ -1,0 +1,25 @@
+.table {
+  width: 100%;
+  font-family: 'Libre Baskerville', serif;
+}
+
+.th {
+  padding: 20px;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.td {
+  padding: 10px 20px;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.th:not(:last-child),
+.td:not(:last-child) {
+  border-right: 1px solid #bdbdbd;
+}
+
+.td:first-of-type {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

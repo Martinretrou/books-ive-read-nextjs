@@ -46,6 +46,7 @@
 .formImagePreview {
   width: 300px;
   height: 450px;
+  cursor: pointer;
 }
 
 .fileInput {
@@ -91,8 +92,6 @@
 }
 
 .formFooter div {
-  grid-column-start: 2;
-  grid-column-end: 2;
   padding: 30px;
   border-left: 1px solid #bdbdbd;
 }

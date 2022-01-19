@@ -21,8 +21,10 @@ const Dashboard = ({ books }: DashboardProps) => {
     }
   }, [user]);
 
+  console.log({ books });
+
   return (
-    <main className="container">
+    <main>
       <NextSeo
         title="Dashboard | Books I've read"
         canonical="https://www.booksiveread.fr/"
@@ -40,7 +42,22 @@ const Dashboard = ({ books }: DashboardProps) => {
               </p>
             </div>
           </div>
-          <Link href="/admin/dashboard/add-book">Add book</Link>
+          <div className={styles.actions}>
+            <div className={styles.action}>
+              <Link href="/admin/dashboard/add-book">
+                <a>
+                  <button type="button">Add book</button>
+                </a>
+              </Link>
+            </div>
+            <div className={styles.action}>
+              <Link href="/admin/dashboard/edit-book">
+                <a>
+                  <button type="button">Edit books</button>
+                </a>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </main>

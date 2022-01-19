@@ -8,3 +8,23 @@
   padding: 30px;
   border-right: 1px solid #bdbdbd;
 }
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.action {
+  width: 100%;
+  padding: 30px;
+  border-right: 1px solid #bdbdbd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.action a,
+.action button {
+  width: 100%;
+}

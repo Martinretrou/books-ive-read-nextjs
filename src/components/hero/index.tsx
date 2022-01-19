@@ -12,7 +12,7 @@ const Hero = () => (
     <div className={styles.heroContent}>
       <div className={styles.heroTitle}>
         <h1>
-          Books I've read <br /> <mark>2016 - 2021</mark>
+          Books I've read <br /> <mark>2016 - 2022</mark>
         </h1>
       </div>
       <div className={styles.heroDescription}>

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { createRef, useMemo, useState } from 'react';
@@ -16,20 +17,23 @@ type BookFormProps = {
   book?: IBook;
   authors: string[];
   onSubmit: (form: any) => void;
+  onDelete?: () => void;
 };
 
-const BookForm = ({ authors, book, onSubmit }: BookFormProps) => {
+const BookForm = ({ authors, book, onSubmit, onDelete }: BookFormProps) => {
   const [title, setTitle] = useState<string>(book?.title || ``);
   const [author, setAuthor] = useState<string>(book?.author || ``);
   const [year, setYear] = useState<string>(book?.readIn || ``);
   const [comment, setComment] = useState<string>(book?.comment || ``);
   const [review, setReview] = useState<string>(book?.review || ``);
   const [currentlyReading, setCurrentlyReading] = useState<boolean>(
-    book?.currentlyReading || false,
+    Boolean(book?.currentlyReading) || false,
   );
-  const [filePreview, setFilePreview] = useState<any>(book?.image.url || ``);
-  const [imageAsFile, setImageAsFile] = useState(``);
-  const [date, setDate] = useState(new Date());
+  const [filePreview, setFilePreview] = useState<any>(book?.image?.url || ``);
+  const [imageAsFile, setImageAsFile] = useState(undefined);
+  const [date, setDate] = useState(
+    book?.finishedDate ? new Date(book.finishedDate) : new Date(),
+  );
   const file = createRef<HTMLInputElement>();
 
   const range = (start: number, stop: number, step: number) =>
@@ -62,14 +66,16 @@ const BookForm = ({ authors, book, onSubmit }: BookFormProps) => {
       title,
       author,
       comment,
+      currentlyReading: String(currentlyReading),
       review,
       readIn: year,
-      publicationDate: date,
+      finishedDate: date.toISOString(),
       image: {
-        file: imageAsFile,
+        file: imageAsFile !== undefined ? imageAsFile : filePreview,
         alt: title,
       },
-      created_at: new Date(),
+      createdAt: new Date().toISOString(),
+      hasChangedCover: !!imageAsFile,
     };
     onSubmit(payload);
   };
@@ -80,7 +86,7 @@ const BookForm = ({ authors, book, onSubmit }: BookFormProps) => {
       author.length > 0 &&
       review !== undefined &&
       year !== null &&
-      !imageAsFile,
+      !filePreview,
     [title, author, review, year, imageAsFile],
   );
 
@@ -106,6 +112,7 @@ const BookForm = ({ authors, book, onSubmit }: BookFormProps) => {
           )}
           {filePreview && (
             <img
+              onClick={() => file?.current?.click()}
               className={styles.formImagePreview}
               src={filePreview}
               alt="Book cover preview"
@@ -128,6 +135,9 @@ const BookForm = ({ authors, book, onSubmit }: BookFormProps) => {
               className="creatable"
               classNamePrefix="creatable"
               options={authorsOptions}
+              defaultValue={authorsOptions.find(
+                (item) => item.label === book?.author,
+              )}
               onChange={(value: { label: string; value: string }) =>
                 setAuthor(value.value)
               }
@@ -141,6 +151,9 @@ const BookForm = ({ authors, book, onSubmit }: BookFormProps) => {
               className="select"
               classNamePrefix="select"
               options={yearsOptions}
+              defaultValue={yearsOptions.find(
+                (item) => String(item.label) === String(book?.readIn),
+              )}
               onChange={(value: { label: string; value: string }) =>
                 setYear(value.value)
               }
@@ -156,7 +169,7 @@ const BookForm = ({ authors, book, onSubmit }: BookFormProps) => {
           </div>
 
           <div className={styles.twoCols}>
-            <DayPickerInput onDayChange={setDate} />
+            <DayPickerInput value={date || undefined} onDayChange={setDate} />
             <Select
               placeholder="Rating of this book"
               inputId="rating"
@@ -164,6 +177,9 @@ const BookForm = ({ authors, book, onSubmit }: BookFormProps) => {
               className="rating"
               classNamePrefix="rating"
               options={ratingOptions}
+              defaultValue={ratingOptions.find(
+                (item) => String(item.label) === String(book?.review),
+              )}
               onChange={(item: { label: string; value: string }) =>
                 setReview(item.value)
               }
@@ -178,6 +194,13 @@ const BookForm = ({ authors, book, onSubmit }: BookFormProps) => {
         </div>
       </div>
       <div className={styles.formFooter}>
+        {book && (
+          <div>
+            <button onClick={onDelete} type="button">
+              Delete book
+            </button>
+          </div>
+        )}
         <div>
           <button
             disabled={disableSubmit}
@@ -185,7 +208,7 @@ const BookForm = ({ authors, book, onSubmit }: BookFormProps) => {
             onClick={handleOnSubmit}
             type="submit"
           >
-            Submit book
+            {book ? `Edit book` : `Submit book`}
           </button>
         </div>
       </div>

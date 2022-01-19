@@ -79,7 +79,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
   }, [books, allYears, rating, search, selectedAuthor, selectedYear]);
 
   return (
-    <main className="container">
+    <main>
       <div className="page">
         <Head>
           <title>Books I've read</title>

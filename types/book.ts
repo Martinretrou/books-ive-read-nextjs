@@ -1,12 +1,14 @@
 export interface IBook {
+  id?: string;
   title: string;
   author: string;
   readIn: string;
   review: string;
-  currentlyReading?: boolean;
+  currentlyReading?: string;
   publicationDate?: string;
+  finishedDate?: string;
   comment?: string;
-  created_at: Date;
+  createdAt: Date;
   image: {
     url: string;
     alt: string;

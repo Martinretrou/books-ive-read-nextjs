@@ -7,14 +7,13 @@ import { NextSeo } from 'next-seo';
 import { BookForm } from '@/components';
 import { IBook } from '@/../types/book';
 import { getAuthorsFromBooks } from '@/helpers/book';
-import kebabCase from 'lodash.kebabcase';
 import { v4 as uuidv4 } from 'uuid';
 
-type AddbookProps = {
+type AddBookProps = {
   books: IBook[];
 };
 
-const AddBook = ({ books }: AddbookProps) => {
+const AddBook = ({ books }: AddBookProps) => {
   const router = useRouter();
   const [user] = useAuthState(auth as any);
 
@@ -28,13 +27,14 @@ const AddBook = ({ books }: AddbookProps) => {
 
   const submitBook = (form: any) => {
     const { image, ...rest } = form;
+    const uuid = uuidv4();
 
-    const ref = storage.ref(`/covers/${kebabCase(image.alt)}`);
+    const ref = storage.ref(`/covers/${uuid}`);
     const uploadTask = ref.put(image.file);
 
     uploadTask.on(`state_changed`, console.log, console.error, () => {
       ref.getDownloadURL().then((url) => {
-        db.ref(`books/${uuidv4()}`).set({
+        db.ref(`books/${uuid}`).set({
           ...rest,
           image: {
             url,
@@ -46,7 +46,7 @@ const AddBook = ({ books }: AddbookProps) => {
   };
 
   return (
-    <main className="container">
+    <main>
       <NextSeo
         title="Add a book | Books I've read"
         canonical="https://www.booksiveread.fr/"
