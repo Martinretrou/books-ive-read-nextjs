@@ -2,6 +2,7 @@ import { auth, signInWithEmailAndPassword } from '@/../firebase';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import styles from '@/styles/Auth.module.css';
 
 const Auth: React.FC = () => {
   const router = useRouter();
@@ -16,8 +17,9 @@ const Auth: React.FC = () => {
   }, [user, error, loading]);
 
   return (
-    <main>
-      <form>
+    <main className={styles.main}>
+      <form className={styles.form}>
+        <h1>Books I've read</h1>
         <input
           type="text"
           value={email}

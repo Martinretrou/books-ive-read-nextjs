@@ -24,6 +24,7 @@ const BookByYearchart = ({ books }: BookByYearchartProps) => {
       const temp = [...books.filter((book) => book?.readIn)];
       return [
         ...new Set(temp.map((book) => String(book.readIn))),
+        // eslint-disable-next-line no-nested-ternary
       ].sort((a, b) => (a > b ? 1 : a < b ? -1 : 0));
     }
     return [];
@@ -53,7 +54,7 @@ const BookByYearchart = ({ books }: BookByYearchartProps) => {
         <HorizontalGridLines />
         <XAxis />
         <YAxis />
-        <VerticalBarSeries color="black" data={data} />
+        <VerticalBarSeries barWidth={0.6} color="black" data={data as any} />
       </XYPlot>
     </div>
   );
