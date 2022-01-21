@@ -188,8 +188,15 @@ button:hover {
 
 @media screen and (max-width: 650px) {
   .grid {
-    margin-top: -200px;
+    margin-top: -175px;
     grid-template-rows: repeat(12, 1fr);
+  }
+
+  .grid-item,
+  .grid-item img {
+    width: 100px;
+    height: 150px;
+    border-radius: 8px;
   }
 }
 
