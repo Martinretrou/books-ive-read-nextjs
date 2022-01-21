@@ -17,8 +17,9 @@ const Hero = () => (
       </div>
       <div className={styles.heroDescription}>
         <p>
-          Here's a list of my latest reading. I've started recording my readings
-          in 2016 since I've fallen in the science-fiction rabbit hole.
+          Here's a list of the books I've read since 2016. I've started
+          recording my readings since I've fallen in the science-fiction rabbit
+          hole.
           <br />
           <br />
           The list is mostly composed of science-fiction books ranging from some
