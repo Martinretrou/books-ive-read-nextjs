@@ -187,6 +187,13 @@ button:hover {
 }
 
 @media screen and (max-width: 650px) {
+  .page {
+    padding: 0 15px;
+  }
+  .grid-container {
+    height: 800px;
+    width: calc(100vw - 30px);
+  }
   .grid {
     margin-top: -175px;
     grid-template-rows: repeat(12, 1fr);
