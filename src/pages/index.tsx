@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useMemo, useState } from 'react';
-import { BooksList, Filters, Hero } from '@/components';
+import { BooksGrid, BooksList, Filters, Hero } from '@/components';
 import Head from 'next/head';
 import { NextSeo } from 'next-seo';
 import { db } from '@/../firebase';
@@ -104,6 +104,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
           }}
         />
         <div className="wrapper">
+          <BooksGrid books={books.sort((a, b) => 0.5 - Math.random())} />
           <Hero />
           <Filters
             years={allYears}

@@ -7,6 +7,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background: #ecece9;
+  width: 100vw;
+  overflow-x: hidden;
 }
 
 * {
@@ -95,6 +97,78 @@ button:hover {
   padding: 30px;
   border-top: 1px solid #bdbdbd;
   border-bottom: 1px solid #bdbdbd;
+}
+
+.grid-container {
+  width: 200vw;
+  height: 100vh;
+  overflow: hidden;
+  margin-left: -30px;
+}
+
+.grid {
+  width: 200vw;
+  display: grid;
+  margin-left: -50vw;
+  margin-top: -20vh;
+  grid-template-columns: repeat(13, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  row-gap: 20px;
+  column-gap: 20px;
+  perspective-origin: 150% 150%;
+  transform-style: preserve-3d;
+  transform: rotate3d(0, 0, 0.15, 25deg);
+}
+
+.grid-item,
+.grid-item img,
+.grid-item span {
+  animation: all 150ms ease-in-out;
+}
+
+.grid-item,
+.grid-item img {
+  width: 225px;
+  height: 350px;
+  border-radius: 8px;
+}
+
+.grid-item:hover,
+.grid-item:hover img {
+  transform: scale(1.05);
+}
+
+.grid-item:hover span {
+  overflow: visible !important;
+}
+
+@media screen and (max-width: 1200px) {
+  .grid {
+    margin-left: -500px;
+    margin-top: -100px;
+    grid-template-rows: repeat(8, 1fr);
+  }
+
+  .grid-item,
+  .grid-item img {
+    width: 175px;
+    height: 270px;
+    border-radius: 8px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .grid {
+    margin-left: -500px;
+    margin-top: -100px;
+    grid-template-rows: repeat(12, 1fr);
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .grid {
+    grid-template-rows: repeat(12, 1fr);
+  }
 }
 
 /* Date picker */
