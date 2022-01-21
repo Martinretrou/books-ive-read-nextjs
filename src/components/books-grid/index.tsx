@@ -8,6 +8,8 @@ type BooksGridProps = {
   books: IBook[];
 };
 
+// TODO: At a 30sec interval, shuffle and restart the animation by clearing and refading in
+
 const BooksGrid = ({ books }: BooksGridProps) => (
   <div className="grid-container">
     <div className="grid">

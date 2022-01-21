@@ -180,7 +180,7 @@ button:hover {
 
 @media screen and (max-width: 1000px) {
   .grid {
-    margin-left: -500px;
+    margin-left: -650px;
     margin-top: -100px;
     grid-template-rows: repeat(12, 1fr);
   }
@@ -188,6 +188,7 @@ button:hover {
 
 @media screen and (max-width: 650px) {
   .grid {
+    margin-top: -200px;
     grid-template-rows: repeat(12, 1fr);
   }
 }
