@@ -8,7 +8,7 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background: #ecece9;
   width: 100vw;
-  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 * {
@@ -80,7 +80,7 @@ button:hover {
 }
 
 .page {
-  width: 100%;
+  width: 100vw;
   padding: 0 30px;
   box-sizing: border-box;
 }
@@ -100,10 +100,9 @@ button:hover {
 }
 
 .grid-container {
-  width: calc(100vw - 60px);
+  width: 100%;
   height: 100vh;
   overflow: hidden;
-  /* margin-left: -30px; */
 }
 
 .grid {

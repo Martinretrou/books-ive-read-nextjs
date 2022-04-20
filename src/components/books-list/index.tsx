@@ -37,7 +37,7 @@ const BooksList = ({ books, year, title, hideRating }: BooksListProps) => (
     <div className={classNames(styles.list, `menu`, `grid-1-cols`)}>
       {map(books, (book: IBook, index: number) => (
         <BookListItem
-          key={`${book?.title}-${index}`}
+          key={book.id}
           hideRating={hideRating}
           book={book}
           priority={index === 0}
