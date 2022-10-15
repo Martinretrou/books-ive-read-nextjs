@@ -75,7 +75,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
       });
       return temp.map((y) =>
         y
-          .sort((a, b) =>
+          .sort((a: any, b: any) =>
             a.finishedDate > b.finishedDate
               ? 1
               : a.finishedDate < b.finishedDate
