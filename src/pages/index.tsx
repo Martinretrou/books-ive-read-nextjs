@@ -73,7 +73,17 @@ const Home: React.FC<HomeProps> = ({ data }) => {
         }
         temp.push(nextBooks);
       });
-      return temp;
+      return temp.map((y) =>
+        y
+          .sort((a, b) =>
+            a.finishedDate > b.finishedDate
+              ? 1
+              : a.finishedDate < b.finishedDate
+              ? -1
+              : 0,
+          )
+          .reverse(),
+      );
     }
     return [];
   }, [books, allYears, rating, search, selectedAuthor, selectedYear]);
