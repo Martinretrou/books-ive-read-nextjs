@@ -77,7 +77,7 @@ const EditBook = ({ books, book }: EditBookProps) => {
           <header className="header">
             <h1>Edit a book</h1>
             <Link href="/admin/dashboard/edit-book">
-              <a className="link">← Back to book table</a>
+              <p className="link">← Back to book table</p>
             </Link>
           </header>
 

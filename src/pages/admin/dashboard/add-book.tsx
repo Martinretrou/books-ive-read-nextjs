@@ -62,7 +62,7 @@ const AddBook = ({ books }: AddBookProps) => {
           <header className="header">
             <h1>Add a book</h1>
             <Link href="/admin/dashboard">
-              <a className="link">← Back to dashboard</a>
+              <p className="link">← Back to dashboard</p>
             </Link>
           </header>
 

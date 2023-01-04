@@ -42,16 +42,12 @@ const Dashboard = ({ books }: DashboardProps) => {
             </div>
             <div className={styles.action}>
               <Link href="/admin/dashboard/add-book">
-                <a>
-                  <button type="button">Add book</button>
-                </a>
+                <button type="button">Add book</button>
               </Link>
             </div>
             <div className={styles.action}>
               <Link href="/admin/dashboard/edit-book">
-                <a>
-                  <button type="button">Edit books</button>
-                </a>
+                <button type="button">Edit books</button>
               </Link>
             </div>
           </div>

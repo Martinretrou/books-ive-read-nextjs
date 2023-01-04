@@ -1,7 +1,5 @@
 module.exports = {
-  future: {
-    webpack5: true,
-  },
+  reactStrictMode: false,
   images: {
     domains: ['images.prismic.io', 'firebasestorage.googleapis.com'],
   },

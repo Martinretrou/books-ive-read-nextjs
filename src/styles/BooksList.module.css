@@ -4,38 +4,59 @@
 
 .container {
   display: grid;
-  grid-template-columns: 2fr 6fr;
+  grid-template-columns: 4fr 2fr;
   align-items: baseline;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.container + .container {
+  margin-top: 150px;
 }
 
 .year {
-  position: sticky;
-  top: 50%;
+  /* top: 30%; */
   text-align: center;
-  font-size: 80px;
+  font-size: 200px;
   margin: 0;
   margin-top: 50px;
   align-self: start;
   position: sticky;
+  color: transparent;
+  /* height: 100%; */
+  width: 100%;
+  /* writing-mode: vertical-rl;
+  text-orientation: mixed; */
+  /* transform: rotate(90deg); */
+  text-stroke: 1px #d74528;
+  -webkit-text-stroke: 2px #d74528;
+  -webkit-text-fill-color: transparent;
+}
+
+.year:hover {
+  color: #d74528;
+  -webkit-text-fill-color: #d74528;
 }
 
 .item {
+  font-family: 'Playfair Display', serif;
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  column-gap: 50px;
-  padding: 30px;
+  display: flex;
+  column-gap: 40px;
+  padding: 20px 30px;
   align-items: center;
   cursor: crosshair;
-  border-bottom: 1px solid #bdbdbd;
-  border-left: 1px solid #bdbdbd;
+}
+
+.item + .item {
+  margin-top: 20px;
 }
 
 .content {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   z-index: 1;
 }
 
@@ -47,7 +68,7 @@
 
 .title,
 .author {
-  font-family: 'Libre Baskerville', serif;
+  font-family: 'Playfair Display', serif;
 }
 
 .title {
@@ -60,7 +81,7 @@
 .author {
   font-weight: normal;
   font-size: 18px;
-  color: #595959;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .read {
@@ -68,9 +89,126 @@
   font-size: 1em;
 }
 
-.rating p {
-  font-family: 'Libre Baskerville', serif;
-  color: black;
+.img {
+  cursor: pointer;
+}
+
+.lightbox {
+  position: fixed;
+  z-index: 4;
+  /* top: 0; */
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.lightboxImg {
+  margin-right: 40px;
+}
+
+.lightboxImg img {
+  width: 400px;
+  height: 600px;
+}
+
+.lightboxContent {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 2fr;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.lightboxBackdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(0px);
+  animation: blurBackdrop 150ms ease-in-out forwards;
+}
+
+.lightboxClose {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  fill: white;
+  cursor: pointer;
+}
+
+.lightboxClose svg {
+  width: 30px;
+  height: 30px;
+}
+
+.lightboxClose path,
+.lightboxClose polygon,
+.lightboxClose rect {
+  fill: white;
+}
+
+.contentPrevious {
+  height: 100%;
+  cursor: w-resize;
+}
+
+.contentNext,
+.contentPrevious {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contentNext svg,
+.contentPrevious svg {
+  fill: white;
+}
+
+.contentNext svg {
+  transform: rotate(45deg);
+}
+
+.contentPrevious svg {
+  transform: rotate(-135deg);
+}
+
+.contentNext {
+  height: 100%;
+  cursor: e-resize;
+}
+
+@keyframes blurBackdrop {
+  0% {
+    backdrop-filter: blur(0px);
+  }
+  100% {
+    backdrop-filter: blur(4px);
+  }
+}
+
+.imgBase {
+  width: 400px;
+  height: 600px;
+  position: fixed;
+  top: 50px;
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(2);
+  }
+}
+
+.rating p,
+.rating b {
+  font-family: 'Playfair Display', serif;
   font-size: 22px;
   line-height: 22px;
   margin-bottom: 0;

@@ -64,7 +64,7 @@ const EditBookListing = ({ books }: EditBookListingProps) => {
                 <Link
                   href={`/admin/dashboard/edit-book/${cell?.row?.original?.id}`}
                 >
-                  <a className="link">Edit book</a>
+                  <p className="link">Edit book</p>
                 </Link>
               </div>
             ),
@@ -86,7 +86,7 @@ const EditBookListing = ({ books }: EditBookListingProps) => {
           <header className="header">
             <h1>Edit book</h1>
             <Link href="/admin/dashboard">
-              <a className="link">← Back to dashboard</a>
+              <p className="link">← Back to dashboard</p>
             </Link>
           </header>
 

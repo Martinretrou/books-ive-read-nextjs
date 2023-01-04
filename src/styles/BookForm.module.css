@@ -69,7 +69,7 @@
 
 .textarea {
   height: 225px;
-  background-color: white;
+  background-color: black;
   border: 1px solid #bdbdbd;
   border-radius: 4px;
   font-family: sans-serif;
@@ -95,4 +95,8 @@
 .formFooter div {
   padding: 30px;
   border-left: 1px solid #bdbdbd;
+}
+
+.form input {
+  color: black;
 }

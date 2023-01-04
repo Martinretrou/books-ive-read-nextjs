@@ -1,49 +1,93 @@
 /* eslint-disable no-nested-ternary */
-import React, { useMemo, useState } from 'react';
-import { BooksGrid, BooksList, Filters, Hero } from '@/components';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { BooksGrid, BooksList, Hero } from '@/components';
 import Head from 'next/head';
 import { NextSeo } from 'next-seo';
 import { db } from '@/../firebase';
 import { IBook } from '@/../types/book';
-import { getAuthorsFromBooks } from '@/helpers/book';
+import dynamic from 'next/dynamic';
+
+import {
+  SmoothScrollContext,
+  SmoothScrollProvider,
+} from '@/providers/SmoothScrollProvider';
+
+const Lightbox = dynamic(() => import(`../components/lightbox`));
+
+// import { getAuthorsFromBooks } from '@/helpers/book';
 
 type HomeProps = {
   data: IBook[];
 };
 
 const Home: React.FC<HomeProps> = ({ data }) => {
+  const [allBooks, setAllBooks] = useState<IBook[]>([]);
   const [search, setSearch] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null);
   const [rating, setRating] = useState<number | null>(null);
 
+  const [focusedItem, setFocusedItem] = useState<{
+    yearIndex: any;
+    bookIndex: number | null;
+  } | null>(null);
+
+  const { scroll } = useContext(SmoothScrollContext);
+
+  useEffect(() => {
+    const fetchAllBooks = async () => {
+      try {
+        const ref = db.ref(`books/`);
+        const snapshot = await ref.once(`value`);
+        const books = Object.values(snapshot.val()) || ([] as IBook[]);
+        const filtered = books;
+        if (filtered) {
+          filtered.sort((a: any, b: any) =>
+            Number(a.readIn) > Number(b.readIn)
+              ? -1
+              : Number(a.readIn) < Number(b.readIn)
+              ? 1
+              : 0,
+          );
+        }
+        setAllBooks(filtered as IBook[]);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchAllBooks();
+  }, []);
+
   const books = useMemo(() => {
-    if (data) {
-      return data.sort((a: IBook, b: IBook) =>
+    if (allBooks || data) {
+      return (allBooks || data).sort((a: IBook, b: IBook) =>
         a.readIn > b.readIn ? -1 : a.readIn < b.readIn ? 1 : 0,
       );
     }
     return [];
-  }, [data]);
+  }, [allBooks, data]);
 
   const allYears = useMemo(() => {
-    if (books) {
-      const temp = [...books.filter((book) => book?.readIn)];
+    if (allBooks || books) {
+      const temp = [...(allBooks || books).filter((book) => book?.readIn)];
       return [...new Set(temp.map((book) => String(book.readIn)))]
         .sort((a, b) => (a > b ? 1 : a < b ? -1 : 0))
         .reverse();
     }
     return [];
-  }, [books]);
+  }, [allBooks, books]);
 
-  const allAuthors = useMemo(() => getAuthorsFromBooks(books), [books]);
+  // const allAuthors = useMemo(() => getAuthorsFromBooks(allBooks || books), [
+  //   allBooks || books,
+  // ]);
 
   const booksByYear = useMemo(() => {
-    if (books && allYears) {
+    if ((allBooks || books) && allYears) {
       const temp: any[] = [];
       // eslint-disable-next-line array-callback-return
       allYears?.map((year) => {
-        let nextBooks = books.filter(
+        let nextBooks = (allBooks || books).filter(
           (book) => String(book.readIn) === String(year),
         );
         if (rating) {
@@ -76,7 +120,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
       return temp;
     }
     return [];
-  }, [books, allYears, rating, search, selectedAuthor, selectedYear]);
+  }, [allBooks, books, allYears, rating, search, selectedAuthor, selectedYear]);
 
   return (
     <main>
@@ -103,28 +147,52 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             cardType: `summary_large_image`,
           }}
         />
-        <div className="wrapper">
-          <BooksGrid books={books.sort((a, b) => 0.5 - Math.random())} />
-          <Hero />
-          <Filters
+        {allBooks.length ? (
+          <SmoothScrollProvider options={{ smooth: true }}>
+            <div className="wrapper" id="wrapper">
+              <Hero />
+              <BooksGrid books={books} />
+              {/* <Filters
             years={allYears}
             authors={allAuthors}
             onSearchChange={setSearch}
             onAuthorChange={setSelectedAuthor}
             onRangeChange={setRating}
             onYearChange={setSelectedYear}
-          />
-          {booksByYear.map((b: IBook[]) => (
-            <BooksList key={b[0]?.readIn} books={b} year={b[0]?.readIn} />
-          ))}
-        </div>
+          /> */}
+              {booksByYear.map((b: IBook[], yearIndex: number) => (
+                <BooksList
+                  key={b[0]?.readIn}
+                  books={b}
+                  year={b[0]?.readIn}
+                  handleClick={(bookIndex) => {
+                    setFocusedItem({ yearIndex, bookIndex });
+                    (scroll as any)?.stop();
+                  }}
+                />
+              ))}
+            </div>
+            <Lightbox
+              books={booksByYear[focusedItem?.yearIndex]}
+              selectedIndex={focusedItem?.bookIndex}
+              onIndexChange={(bookIndex) => {
+                setFocusedItem({
+                  yearIndex: focusedItem?.yearIndex,
+                  bookIndex,
+                });
+              }}
+            />
+          </SmoothScrollProvider>
+        ) : (
+          <p>loading</p>
+        )}
       </div>
     </main>
   );
 };
 
 export async function getServerSideProps() {
-  const ref = db.ref(`books/`);
+  const ref = db.ref(`books/`).limitToLast(30);
   const snapshot = await ref.once(`value`);
   const books = Object.values(snapshot.val()) || [];
 

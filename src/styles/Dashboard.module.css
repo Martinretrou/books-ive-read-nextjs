@@ -29,6 +29,11 @@
   width: 100%;
 }
 
+.action button {
+  background-color: white;
+  color: black;
+}
+
 .graphs {
   display: grid;
   grid-template-columns: 1fr 1fr;

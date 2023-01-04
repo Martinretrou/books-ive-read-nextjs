@@ -1,32 +1,38 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Image from 'next/image';
 import { IBook } from '@/../types/book';
 import map from 'lodash.map';
-import Fade from 'react-reveal/Fade';
 
 type BooksGridProps = {
   books: IBook[];
 };
 
-// TODO: At a 30sec interval, shuffle and restart the animation by clearing and refading in
+const BooksGrid = ({ books }: BooksGridProps) => {
+  const randomized = useMemo(() => {
+    const shuffled = books.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 10);
+  }, [books]);
 
-const BooksGrid = ({ books }: BooksGridProps) => (
-  <div className="grid-container">
-    <div className="grid">
-      {map(books, (book: IBook, index: number) => (
-        <Fade delay={index * 35}>
-          <div className="grid-item">
+  return (
+    <div className="grid-container">
+      <div className="columns">
+        {map(randomized, (book: IBook, index: number) => (
+          <div
+            className="grid-item"
+            data-scroll
+            data-scroll-delay="0.06"
+            data-scroll-speed={String(index)}
+          >
             <Image
-              width={225}
+              width={230}
               height={350}
               src={book.image.url}
               alt={book.image.alt}
             />
           </div>
-        </Fade>
-      ))}
+        ))}
+      </div>
     </div>
-  </div>
-);
-
+  );
+};
 export default BooksGrid;

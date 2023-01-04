@@ -1,11 +1,11 @@
 .page {
   width: 100%;
-  padding: 0 30px;
+  /* padding: 0 30px; */
   box-sizing: border-box;
 }
 
 .wrapper {
-  border-top: 1px solid transparent;
+  /* border-top: 1px solid transparent;
   border-left: 1px solid #bdbdbd;
-  border-right: 1px solid #bdbdbd;
+  border-right: 1px solid #bdbdbd; */
 }

@@ -67,11 +67,15 @@ const MostReadAuthorBarChart = ({ books }: MostReadAuthorBarChartProps) => {
           height={400}
           xDistance={100}
         >
-          <VerticalGridLines />
-          <HorizontalGridLines />
-          <XAxis tickLabelAngle={-65} />
-          <YAxis />
-          <VerticalBarSeries barWidth={0.6} color="black" data={data as any} />
+          <VerticalGridLines style={{ stroke: `rgba(255,255,255,0.4)` }} />
+          <HorizontalGridLines style={{ stroke: `rgba(255,255,255,0.4)` }} />
+          <XAxis tickLabelAngle={-65} style={{ text: { fill: `white` } }} />
+          <YAxis style={{ text: { fill: `white` } }} />
+          <VerticalBarSeries
+            barWidth={0.6}
+            color="#d74528"
+            data={data as any}
+          />
         </XYPlot>
       </div>
     </div>

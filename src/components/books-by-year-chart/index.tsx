@@ -49,12 +49,12 @@ const BookByYearchart = ({ books }: BookByYearchartProps) => {
   return (
     <div className="chart">
       <h3>Books read by year</h3>
-      <XYPlot xType="ordinal" width={600} height={300} xDistance={100}>
-        <VerticalGridLines />
-        <HorizontalGridLines />
-        <XAxis />
-        <YAxis />
-        <VerticalBarSeries barWidth={0.6} color="black" data={data as any} />
+      <XYPlot xType="ordinal" width={800} height={300} xDistance={100}>
+        <VerticalGridLines style={{ stroke: `rgba(255,255,255,0.4)` }} />
+        <HorizontalGridLines style={{ stroke: `rgba(255,255,255,0.4)` }} />
+        <XAxis style={{ text: { fill: `white` } }} />
+        <YAxis style={{ text: { fill: `white` } }} />
+        <VerticalBarSeries barWidth={0.6} color="#d74528" data={data as any} />
       </XYPlot>
     </div>
   );
