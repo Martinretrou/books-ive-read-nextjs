@@ -11,6 +11,7 @@ import {
   SmoothScrollContext,
   SmoothScrollProvider,
 } from '@/providers/SmoothScrollProvider';
+import Loader from '@/components/loader';
 
 const Lightbox = dynamic(() => import(`../components/lightbox`));
 
@@ -26,6 +27,8 @@ const Home: React.FC<HomeProps> = ({ data }) => {
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null);
   const [rating, setRating] = useState<number | null>(null);
+
+  const isLoaded = useMemo(() => !!allBooks.length, [allBooks]);
 
   const [focusedItem, setFocusedItem] = useState<{
     yearIndex: any;
@@ -122,8 +125,10 @@ const Home: React.FC<HomeProps> = ({ data }) => {
     return [];
   }, [allBooks, books, allYears, rating, search, selectedAuthor, selectedYear]);
 
+  console.log({ booksByYear });
+
   return (
-    <main>
+    <main data-scroll-section>
       <div className="page">
         <Head>
           <title>Books I've read</title>
@@ -147,7 +152,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             cardType: `summary_large_image`,
           }}
         />
-        {allBooks.length ? (
+        {isLoaded ? (
           <SmoothScrollProvider options={{ smooth: true }}>
             <div className="wrapper" id="wrapper">
               <Hero />
@@ -184,7 +189,7 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             />
           </SmoothScrollProvider>
         ) : (
-          <p>loading</p>
+          <Loader />
         )}
       </div>
     </main>

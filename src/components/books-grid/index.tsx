@@ -7,9 +7,20 @@ type BooksGridProps = {
   books: IBook[];
 };
 
+const blacklist = [
+  `Frank Herbert`,
+  `Ann Leckie`,
+  `Isaac Asimov`,
+  `Yuval Noah Harari`,
+  `Neal Shusterman`,
+  `Roger Zelazny`,
+];
+
 const BooksGrid = ({ books }: BooksGridProps) => {
   const randomized = useMemo(() => {
-    const shuffled = books.sort(() => 0.5 - Math.random());
+    const shuffled = books
+      .filter((b) => !blacklist.includes(b.author))
+      .sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 10);
   }, [books]);
 
@@ -20,7 +31,7 @@ const BooksGrid = ({ books }: BooksGridProps) => {
           <div
             className="grid-item"
             data-scroll
-            data-scroll-delay="0.06"
+            data-scroll-delay="0.03"
             data-scroll-speed={String(index)}
           >
             <Image

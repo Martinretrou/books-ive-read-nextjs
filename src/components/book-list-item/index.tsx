@@ -62,7 +62,7 @@ const BookListItem = ({
             <p className={classNames(styles.comment)}>{book.comment}</p>
           )}
         </div>
-        {!hideRating && (
+        {!hideRating && book.currentlyReading && (
           <div className={styles.rating}>
             <p>
               Rating: <b>{Number(book.review)}/5</b>

@@ -59,9 +59,9 @@ const BooksList = ({
       gradient={false}
     >
       <h2
+        data-scroll
         data-scroll-direction="horizontal"
         data-scroll-speed="10"
-        // data-scroll-position="right"
         className={styles.year}
       >
         {year || title}

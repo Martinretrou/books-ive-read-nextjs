@@ -66,7 +66,7 @@ const BookForm = ({ authors, book, onSubmit, onDelete }: BookFormProps) => {
       title,
       author,
       comment,
-      currentlyReading: String(currentlyReading),
+      currentlyReading,
       review,
       readIn: year,
       finishedDate: date.toISOString(),
@@ -162,7 +162,9 @@ const BookForm = ({ authors, book, onSubmit, onDelete }: BookFormProps) => {
               <Toggle
                 defaultChecked={currentlyReading}
                 icons={false}
-                onChange={setCurrentlyReading as any}
+                onChange={(e) => {
+                  setCurrentlyReading(e.target.checked);
+                }}
               />
               <span>Currently reading this book</span>
             </div>
