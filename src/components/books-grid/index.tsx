@@ -21,7 +21,7 @@ const BooksGrid = ({ books }: BooksGridProps) => {
     const shuffled = books
       .filter((b) => !blacklist.includes(b.author))
       .sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 10);
+    return shuffled.slice(0, 12);
   }, [books]);
 
   return (
@@ -33,12 +33,14 @@ const BooksGrid = ({ books }: BooksGridProps) => {
             data-scroll
             data-scroll-delay="0.03"
             data-scroll-speed={String(index)}
+            key={`book-${index}`}
           >
             <Image
               width={230}
               height={350}
               src={book.image.url}
               alt={book.image.alt}
+              priority
             />
           </div>
         ))}

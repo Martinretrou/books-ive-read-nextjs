@@ -10,7 +10,7 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background: #0f0e0e;
   width: 100vw;
-  overflow: hidden;
+  overflow-x: hidden;
   scroll-behavior: initial;
   min-height: 100%;
   height: auto;
@@ -59,7 +59,6 @@ button:hover {
 }
 
 .container {
-  padding: 30px;
   border-bottom: 1px solid #bdbdbd;
 }
 
@@ -98,7 +97,6 @@ button:hover {
 }
 
 .page {
-  width: 100vw;
   box-sizing: border-box;
 }
 
@@ -170,11 +168,10 @@ button:hover {
 @media screen and (max-width: 650px) {
   .grid-container {
     height: 800px;
-    width: calc(100vw - 30px);
+    width: 100%;
   }
-  .grid {
-    margin-top: -175px;
-    grid-template-rows: repeat(12, 1fr);
+  .columns {
+    flex-wrap: wrap;
   }
 
   .grid-item,

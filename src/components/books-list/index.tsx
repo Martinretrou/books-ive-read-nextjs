@@ -29,35 +29,24 @@ type BooksListProps = {
   books: IBook[];
   year?: string | number;
   title?: string;
-  hideRating?: boolean;
   handleClick?: (index: number) => void;
 };
 
-const BooksList = ({
-  books,
-  year,
-  title,
-  hideRating,
-  handleClick,
-}: BooksListProps) => (
+const BooksList = ({ books, year, title, handleClick }: BooksListProps) => (
   <section className={classNames(styles.container, `books-list`)}>
     <div className={classNames(styles.list, `menu`, `grid-1-cols`)}>
       {map(books, (book: IBook, index: number) => (
         <BookListItem
           key={book.id}
-          hideRating={hideRating}
           book={book}
-          priority={index === 0}
+          priority={year === new Date().getFullYear()}
           handleClick={() => {
             if (handleClick) handleClick(index);
           }}
         />
       ))}
     </div>
-    <Marquee
-      style={{ width: `100%`, position: `fixed`, left: 0, zIndex: -1 }}
-      gradient={false}
-    >
+    <Marquee className={styles.marquee} gradient={false}>
       <h2
         data-scroll
         data-scroll-direction="horizontal"

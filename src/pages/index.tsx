@@ -13,9 +13,10 @@ import {
 } from '@/providers/SmoothScrollProvider';
 import Loader from '@/components/loader';
 
-const Lightbox = dynamic(() => import(`../components/lightbox`));
+import CursorContextProvider from '@/providers/CursorContext';
+import Cursor from '@/components/cursor';
 
-// import { getAuthorsFromBooks } from '@/helpers/book';
+const Lightbox = dynamic(() => import(`../components/lightbox`));
 
 type HomeProps = {
   data: IBook[];
@@ -128,36 +129,38 @@ const Home: React.FC<HomeProps> = ({ data }) => {
   console.log({ booksByYear });
 
   return (
-    <main data-scroll-section>
-      <div className="page">
-        <Head>
-          <title>Books I've read</title>
-          <meta
-            name="viewport"
-            content="initial-scale=1.0, width=device-width"
+    <CursorContextProvider>
+      <Cursor />
+      <main data-scroll-section>
+        <div className="page">
+          <Head>
+            <title>Books I've read</title>
+            <meta
+              name="viewport"
+              content="initial-scale=1.0, width=device-width"
+            />
+          </Head>
+          <NextSeo
+            title="Books I've read"
+            description="Books I've read in the previous years."
+            canonical="https://www.booksiveread.fr/"
+            openGraph={{
+              url: `https://www.booksiveread.fr/`,
+              title: `Books I've read`,
+              description: `Books I've read`,
+              site_name: `Books I've read`,
+            }}
+            twitter={{
+              handle: `@MartinRetrou`,
+              cardType: `summary_large_image`,
+            }}
           />
-        </Head>
-        <NextSeo
-          title="Books I've read"
-          description="Books I've read in the previous years."
-          canonical="https://www.booksiveread.fr/"
-          openGraph={{
-            url: `https://www.booksiveread.fr/`,
-            title: `Books I've read`,
-            description: `Books I've read`,
-            site_name: `Books I've read`,
-          }}
-          twitter={{
-            handle: `@MartinRetrou`,
-            cardType: `summary_large_image`,
-          }}
-        />
-        {isLoaded ? (
-          <SmoothScrollProvider options={{ smooth: true }}>
-            <div className="wrapper" id="wrapper">
-              <Hero />
-              <BooksGrid books={books} />
-              {/* <Filters
+          {isLoaded ? (
+            <SmoothScrollProvider options={{ smooth: true }}>
+              <div className="wrapper" id="wrapper">
+                <Hero />
+                <BooksGrid books={books} />
+                {/* <Filters
             years={allYears}
             authors={allAuthors}
             onSearchChange={setSearch}
@@ -165,34 +168,35 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             onRangeChange={setRating}
             onYearChange={setSelectedYear}
           /> */}
-              {booksByYear.map((b: IBook[], yearIndex: number) => (
-                <BooksList
-                  key={b[0]?.readIn}
-                  books={b}
-                  year={b[0]?.readIn}
-                  handleClick={(bookIndex) => {
-                    setFocusedItem({ yearIndex, bookIndex });
-                    (scroll as any)?.stop();
-                  }}
-                />
-              ))}
-            </div>
-            <Lightbox
-              books={booksByYear[focusedItem?.yearIndex]}
-              selectedIndex={focusedItem?.bookIndex}
-              onIndexChange={(bookIndex) => {
-                setFocusedItem({
-                  yearIndex: focusedItem?.yearIndex,
-                  bookIndex,
-                });
-              }}
-            />
-          </SmoothScrollProvider>
-        ) : (
-          <Loader />
-        )}
-      </div>
-    </main>
+                {booksByYear.map((b: IBook[], yearIndex: number) => (
+                  <BooksList
+                    key={b[0]?.readIn}
+                    books={b}
+                    year={b[0]?.readIn}
+                    handleClick={(bookIndex) => {
+                      setFocusedItem({ yearIndex, bookIndex });
+                      (scroll as any)?.stop();
+                    }}
+                  />
+                ))}
+              </div>
+              <Lightbox
+                books={booksByYear[focusedItem?.yearIndex]}
+                selectedIndex={focusedItem?.bookIndex}
+                onIndexChange={(bookIndex) => {
+                  setFocusedItem({
+                    yearIndex: focusedItem?.yearIndex,
+                    bookIndex,
+                  });
+                }}
+              />
+            </SmoothScrollProvider>
+          ) : (
+            <Loader />
+          )}
+        </div>
+      </main>
+    </CursorContextProvider>
   );
 };
 

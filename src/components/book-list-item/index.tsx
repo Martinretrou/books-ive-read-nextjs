@@ -7,7 +7,6 @@ import styles from '../../styles/BooksList.module.css';
 
 type BookListItemProps = {
   book: IBook;
-  hideRating?: boolean;
   priority?: boolean;
   handleClick?: () => void;
 };
@@ -15,7 +14,6 @@ type BookListItemProps = {
 const BookListItem = ({
   book,
   priority = false,
-  hideRating = false,
   handleClick,
 }: BookListItemProps) => {
   const { onMouseEnter, onMouseLeave } = useCursorHandlers();
@@ -62,11 +60,16 @@ const BookListItem = ({
             <p className={classNames(styles.comment)}>{book.comment}</p>
           )}
         </div>
-        {!hideRating && book.currentlyReading && (
+        {(!book.currentlyReading || book.currentlyReading === `false`) && (
           <div className={styles.rating}>
             <p>
               Rating: <b>{Number(book.review)}/5</b>
             </p>
+          </div>
+        )}
+        {Boolean(book.currentlyReading) && book.currentlyReading !== `false` && (
+          <div className={styles.rating}>
+            <p>Currently reading</p>
           </div>
         )}
       </div>

@@ -28,8 +28,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* border-bottom: 1px solid #bdbdbd; */
-  /* border-top: 1px solid #bdbdbd; */
   padding: 5% 0;
 }
 
@@ -100,21 +98,29 @@
   .heroContent {
     grid-template-columns: 1fr;
   }
-  .heroTitle {
-    border-right: 0;
-    border-bottom: 1px solid #bdbdbd;
-  }
 }
 
 @media screen and (max-width: 650px) {
+  .hero {
+    min-height: 80vh;
+  }
   .heroTitle,
   .heroDescription {
-    padding: 15px;
+    padding: 15px 15px 0;
+  }
+  .heroDescription {
+    max-width: 90%;
+  }
+  .heroContent h1 {
+    letter-spacing: -2px;
   }
 }
 
 @media screen and (max-width: 500px) {
   .heroContent h1 {
+    font-size: 50px;
+  }
+  .heroContent h2 mark {
     font-size: 50px;
   }
 }

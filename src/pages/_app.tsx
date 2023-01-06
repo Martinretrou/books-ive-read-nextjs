@@ -4,8 +4,6 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import '@/../firebase';
-import CursorContextProvider from '@/providers/CursorContext';
-import Cursor from '@/components/cursor';
 import * as ga from '../lib/ga';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -23,11 +21,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   return (
-    <CursorContextProvider>
-      <Cursor />
-      <main data-scroll-container className="container">
-        <Component {...pageProps} />
-      </main>
-    </CursorContextProvider>
+    <main data-scroll-container className="container">
+      <Component {...pageProps} />
+    </main>
   );
 }

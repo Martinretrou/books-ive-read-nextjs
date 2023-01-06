@@ -26,6 +26,12 @@ export const SmoothScrollProvider = ({ children, options }) => {
           setScroll(
             new LocomotiveScroll({
               el: dataScrollContainer ?? undefined,
+              mobile: {
+                smooth: true,
+              },
+              tablet: {
+                smooth: true,
+              },
               ...options,
             }),
           );
