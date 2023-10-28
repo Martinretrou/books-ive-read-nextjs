@@ -46,10 +46,21 @@ button:hover {
 }
 
 .chart {
+  position: relative;
   padding: 30px;
   width: 100%;
   font-family: 'Libre Baskerville', serif;
   border-bottom: 1px solid #bdbdbd;
+}
+
+.chart-tooltip {
+  background-color: black;
+  color: white;
+  padding: 6px;
+}
+
+.chart-tooltip p {
+  margin: 0;
 }
 
 .chart:not(:last-child) {

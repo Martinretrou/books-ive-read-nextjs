@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   XYPlot,
   XAxis,
@@ -8,6 +8,7 @@ import {
   VerticalGridLines,
   HorizontalGridLines,
   VerticalBarSeries,
+  Hint,
 } from 'react-vis';
 
 import 'react-day-picker/lib/style.css';
@@ -20,6 +21,10 @@ type MostReadAuthorBarChartProps = {
 };
 
 const MostReadAuthorBarChart = ({ books }: MostReadAuthorBarChartProps) => {
+  const [tooltip, setTooltip] = useState<{
+    x: string | number;
+    y: string | number;
+  } | null>(null);
   const allYears = useMemo(() => {
     if (books) {
       const temp = [...books.filter((book) => book?.readIn)];
@@ -56,6 +61,15 @@ const MostReadAuthorBarChart = ({ books }: MostReadAuthorBarChartProps) => {
         .filter((item) => !!item),
     [booksByAuthors],
   );
+
+  const onMouseOver = (value: { x: string | number; y: string | number }) => {
+    setTooltip(value);
+  };
+
+  const onMouseOut = () => {
+    setTooltip(null);
+  };
+
   return (
     <div className="chart">
       <h3>Books read by author</h3>
@@ -69,9 +83,22 @@ const MostReadAuthorBarChart = ({ books }: MostReadAuthorBarChartProps) => {
         >
           <VerticalGridLines />
           <HorizontalGridLines />
-          <XAxis tickLabelAngle={-65} />
+          <XAxis tickLabelAngle={-55} style={{ text: { fontSize: `12px` } }} />
           <YAxis />
-          <VerticalBarSeries barWidth={0.6} color="black" data={data as any} />
+          <VerticalBarSeries
+            onValueMouseOver={onMouseOver}
+            onValueMouseOut={onMouseOut}
+            barWidth={0.6}
+            color="black"
+            data={data as any}
+          />
+          {tooltip && (
+            <Hint value={tooltip}>
+              <div className="chart-tooltip">
+                <p>{tooltip.y} books</p>
+              </div>
+            </Hint>
+          )}
         </XYPlot>
       </div>
     </div>

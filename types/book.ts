@@ -4,7 +4,7 @@ export interface IBook {
   author: string;
   readIn: string;
   review: string;
-  currentlyReading?: string;
+  currentlyReading?: boolean;
   publicationDate?: string;
   finishedDate?: string;
   comment?: string;

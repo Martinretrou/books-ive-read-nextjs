@@ -16,7 +16,7 @@ import { ratingOptions } from '@/helpers/book';
 type BookFormProps = {
   book?: IBook;
   authors: string[];
-  onSubmit: (form: any) => void;
+  onSubmit: (form: any) => Promise<void>;
   onDelete?: () => void;
 };
 
@@ -61,12 +61,24 @@ const BookForm = ({ authors, book, onSubmit, onDelete }: BookFormProps) => {
     setFilePreview(URL.createObjectURL(event.target.files[0]));
   };
 
-  const handleOnSubmit = () => {
+  const formReset = () => {
+    setTitle(``);
+    setAuthor(``);
+    setYear(``);
+    setComment(``);
+    setReview(``);
+    setCurrentlyReading(false);
+    setFilePreview(``);
+    setDate(``);
+    setImageAsFile(undefined);
+  };
+
+  const handleOnSubmit = async () => {
     const payload = {
       title,
       author,
       comment,
-      currentlyReading: String(currentlyReading),
+      currentlyReading,
       review,
       readIn: year,
       finishedDate: date.toISOString(),
@@ -78,6 +90,7 @@ const BookForm = ({ authors, book, onSubmit, onDelete }: BookFormProps) => {
       hasChangedCover: !!imageAsFile,
     };
     onSubmit(payload);
+    if (!book) formReset();
   };
 
   const disableSubmit = useMemo(
@@ -89,6 +102,10 @@ const BookForm = ({ authors, book, onSubmit, onDelete }: BookFormProps) => {
       !filePreview,
     [title, author, review, year, imageAsFile],
   );
+
+  const handleToggle = (value: any) => {
+    setCurrentlyReading(value.target.checked);
+  };
 
   return (
     <div className={styles.formContainer}>
@@ -162,7 +179,7 @@ const BookForm = ({ authors, book, onSubmit, onDelete }: BookFormProps) => {
               <Toggle
                 defaultChecked={currentlyReading}
                 icons={false}
-                onChange={setCurrentlyReading as any}
+                onChange={handleToggle}
               />
               <span>Currently reading this book</span>
             </div>

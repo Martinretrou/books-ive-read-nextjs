@@ -44,6 +44,11 @@ const BookListItem = ({
           </p>
         </div>
       )}
+      {book.currentlyReading === true && (
+        <div className={styles.rating}>
+          <p>👈 Currently reading that one</p>
+        </div>
+      )}
     </div>
   </div>
 );

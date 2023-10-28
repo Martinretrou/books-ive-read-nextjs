@@ -38,7 +38,7 @@ const BooksList = ({ books, year, title, hideRating }: BooksListProps) => (
       {map(books, (book: IBook, index: number) => (
         <BookListItem
           key={book.id}
-          hideRating={hideRating}
+          hideRating={hideRating || book.currentlyReading === true}
           book={book}
           priority={index === 0}
         />
