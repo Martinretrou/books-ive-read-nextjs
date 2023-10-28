@@ -69,7 +69,7 @@ const BookForm = ({ authors, book, onSubmit, onDelete }: BookFormProps) => {
     setReview(``);
     setCurrentlyReading(false);
     setFilePreview(``);
-    setDate(``);
+    setDate(new Date());
     setImageAsFile(undefined);
   };
 
