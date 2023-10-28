@@ -16,7 +16,7 @@ import { ratingOptions } from '@/helpers/book';
 type BookFormProps = {
   book?: IBook;
   authors: string[];
-  onSubmit: (form: any) => Promise<void>;
+  onSubmit: (form: any) => void;
   onDelete?: () => void;
 };
 
