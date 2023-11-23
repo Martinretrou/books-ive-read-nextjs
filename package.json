@@ -36,6 +36,7 @@
     "firebase-admin": "10.0.0",
     "global": "4.4.0",
     "locomotive-scroll": "4.1.4",
+    "lodash.kebabcase": "4.1.1",
     "lodash.map": "4.6.0",
     "next": "13.1.1",
     "next-routes": "1.4.2",

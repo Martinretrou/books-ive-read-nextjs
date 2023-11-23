@@ -29,19 +29,19 @@ type BooksListProps = {
   books: IBook[];
   year?: string | number;
   title?: string;
-  handleClick?: (index: number) => void;
+  handleClick?: (id: string | undefined) => void;
 };
 
 const BooksList = ({ books, year, title, handleClick }: BooksListProps) => (
   <section className={classNames(styles.container, `books-list`)}>
-    <div className={classNames(styles.list, `menu`, `grid-1-cols`)}>
-      {map(books, (book: IBook, index: number) => (
+    <div className={styles.list}>
+      {map(books, (book: IBook) => (
         <BookListItem
           key={book.id}
           book={book}
           priority={year === new Date().getFullYear()}
           handleClick={() => {
-            if (handleClick) handleClick(index);
+            if (handleClick) handleClick(book.slug);
           }}
         />
       ))}

@@ -1,12 +1,51 @@
+.detail {
+  width: 100%;
+  height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sameAuthor {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pageTitle {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: bold;
+  font-size: 20px;
+  opacity: 0.6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  padding-bottom: 100px;
+}
+
+.gridTitle {
+  font-family: 'Playfair Display', serif;
+  font-weight: bold;
+  font-size: 30px;
+  margin-bottom: 40px;
+  margin-top: unset;
+}
+
+/* Pasted */
+
 .list {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 4fr 2fr;
   align-items: baseline;
   max-width: 1080px;
   margin: 0 auto;
@@ -20,7 +59,7 @@
   text-align: center;
   font-size: 200px;
   margin: 0;
-  margin-top: -50px;
+  margin-top: 50px;
   align-self: start;
   position: sticky;
   color: transparent;
@@ -55,6 +94,7 @@
   flex-direction: column;
   justify-content: center;
   z-index: 1;
+  margin-left: 40px;
 }
 
 .marquee {

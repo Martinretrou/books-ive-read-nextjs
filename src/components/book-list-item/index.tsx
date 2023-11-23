@@ -26,6 +26,8 @@ const BookListItem = ({
     if (onMouseLeave) onMouseLeave(e, { active: false, expand: false });
   };
 
+  console.log({ book });
+
   return (
     <div
       onMouseEnter={handleMouseEnter}
@@ -55,7 +57,7 @@ const BookListItem = ({
       >
         <div className="meta">
           <p className={classNames(styles.title)}>{book.title}</p>
-          <p className={classNames(styles.author)}>Author: {book.author}</p>
+          <p className={classNames(styles.author)}>{book.author}</p>
           {book.comment && (
             <p className={classNames(styles.comment)}>{book.comment}</p>
           )}
@@ -67,7 +69,7 @@ const BookListItem = ({
             </p>
           </div>
         )}
-        {Boolean(book.currentlyReading) && book.currentlyReading !== `false` && (
+        {book.currentlyReading && (
           <div className={styles.rating}>
             <p>Currently reading</p>
           </div>

@@ -8,6 +8,7 @@ export interface IBook {
   publicationDate?: string;
   finishedDate?: string;
   comment?: string;
+  slug?: string;
   createdAt: Date;
   image: {
     url: string;

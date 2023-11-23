@@ -19,7 +19,7 @@ const useCursorHandlers = (
     return options;
   }
 
-  const [, setCursor] = useContext(CursorContext);
+  const [cursor, setCursor] = useContext(CursorContext);
 
   const toggleCursor = (eventOptions: any) => {
     setCursor({ ...defaultOptions, ...eventOptions });

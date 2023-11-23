@@ -13,8 +13,9 @@ import {
 } from '@/providers/SmoothScrollProvider';
 import Loader from '@/components/loader';
 
-import CursorContextProvider from '@/providers/CursorContext';
-import Cursor from '@/components/cursor';
+import { useRouter } from 'next/router';
+
+import kebabCase from 'lodash.kebabcase';
 
 const Lightbox = dynamic(() => import(`../components/lightbox`));
 
@@ -23,13 +24,14 @@ type HomeProps = {
 };
 
 const Home: React.FC<HomeProps> = ({ data }) => {
-  const [allBooks, setAllBooks] = useState<IBook[]>([]);
+  const [allBooks, setAllBooks] = useState<IBook[]>(data);
   const [search, setSearch] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null);
   const [rating, setRating] = useState<number | null>(null);
+  const router = useRouter();
 
-  const isLoaded = useMemo(() => !!allBooks.length, [allBooks]);
+  const isLoaded = useMemo(() => !!allBooks?.length, [allBooks]);
 
   const [focusedItem, setFocusedItem] = useState<{
     yearIndex: any;
@@ -38,34 +40,39 @@ const Home: React.FC<HomeProps> = ({ data }) => {
 
   const { scroll } = useContext(SmoothScrollContext);
 
-  useEffect(() => {
-    const fetchAllBooks = async () => {
-      try {
-        const ref = db.ref(`books/`);
-        const snapshot = await ref.once(`value`);
-        const books = Object.values(snapshot.val()) || ([] as IBook[]);
-        const filtered = books;
-        if (filtered) {
-          filtered.sort((a: any, b: any) =>
-            Number(a.readIn) > Number(b.readIn)
-              ? -1
-              : Number(a.readIn) < Number(b.readIn)
-              ? 1
-              : 0,
-          );
-        }
-        setAllBooks(filtered as IBook[]);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchAllBooks = async () => {
+  //     try {
+  //       const ref = db.ref(`books/`);
+  //       const snapshot = await ref.once(`value`);
+  //       const books = Object.entries(snapshot.val()) || ([] as IBook[]);
+  //       const filtered = books.map((item) => {
+  //         const id = item?.[0];
+  //         const value = item?.[1];
+  //         return { ...value, id };
+  //       });
+  //       console.log({ filtered });
+  //       if (filtered) {
+  //         filtered.sort((a: any, b: any) =>
+  //           Number(a.readIn) > Number(b.readIn)
+  //             ? -1
+  //             : Number(a.readIn) < Number(b.readIn)
+  //             ? 1
+  //             : 0,
+  //         );
+  //       }
+  //       setAllBooks(filtered as IBook[]);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   };
 
-    fetchAllBooks();
-  }, []);
+  //   fetchAllBooks();
+  // }, []);
 
   const books = useMemo(() => {
-    if (allBooks || data) {
-      return (allBooks || data).sort((a: IBook, b: IBook) =>
+    if (allBooks) {
+      return allBooks.sort((a: IBook, b: IBook) =>
         a.readIn > b.readIn ? -1 : a.readIn < b.readIn ? 1 : 0,
       );
     }
@@ -126,41 +133,49 @@ const Home: React.FC<HomeProps> = ({ data }) => {
     return [];
   }, [allBooks, books, allYears, rating, search, selectedAuthor, selectedYear]);
 
-  console.log({ booksByYear });
+  // const addSlug = () => {
+  //   if (allBooks.length) {
+  //     allBooks.forEach((book) =>
+  //       db.ref(`books/${book.id}`).set({
+  //         ...book,
+  //         currentlyReading: false,
+  //       }),
+  //     );
+  //   }
+  // };
 
   return (
-    <CursorContextProvider>
-      <Cursor />
-      <main data-scroll-section>
-        <div className="page">
-          <Head>
-            <title>Books I've read</title>
-            <meta
-              name="viewport"
-              content="initial-scale=1.0, width=device-width"
-            />
-          </Head>
-          <NextSeo
-            title="Books I've read"
-            description="Books I've read in the previous years."
-            canonical="https://www.booksiveread.fr/"
-            openGraph={{
-              url: `https://www.booksiveread.fr/`,
-              title: `Books I've read`,
-              description: `Books I've read`,
-              site_name: `Books I've read`,
-            }}
-            twitter={{
-              handle: `@MartinRetrou`,
-              cardType: `summary_large_image`,
-            }}
+    <main data-scroll-section>
+      <div className="page">
+        <Head>
+          <title>Books I've read</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
           />
-          {isLoaded ? (
-            <SmoothScrollProvider options={{ smooth: true }}>
-              <div className="wrapper" id="wrapper">
-                <Hero />
-                <BooksGrid books={books} />
-                {/* <Filters
+        </Head>
+        <NextSeo
+          title="Books I've read"
+          description="Books I've read in the previous years."
+          canonical="https://www.booksiveread.fr/"
+          openGraph={{
+            url: `https://www.booksiveread.fr/`,
+            title: `Books I've read`,
+            description: `Books I've read`,
+            site_name: `Books I've read`,
+          }}
+          twitter={{
+            handle: `@MartinRetrou`,
+            cardType: `summary_large_image`,
+          }}
+        />
+        {isLoaded ? (
+          <SmoothScrollProvider options={{ smooth: true }}>
+            <div className="wrapper" id="wrapper">
+              <Hero />
+              {/* <button onClick={addSlug}>Add slug</button> */}
+              <BooksGrid books={books} />
+              {/* <Filters
             years={allYears}
             authors={allAuthors}
             onSearchChange={setSearch}
@@ -168,42 +183,42 @@ const Home: React.FC<HomeProps> = ({ data }) => {
             onRangeChange={setRating}
             onYearChange={setSelectedYear}
           /> */}
-                {booksByYear.map((b: IBook[], yearIndex: number) => (
-                  <BooksList
-                    key={b[0]?.readIn}
-                    books={b}
-                    year={b[0]?.readIn}
-                    handleClick={(bookIndex) => {
-                      setFocusedItem({ yearIndex, bookIndex });
-                      (scroll as any)?.stop();
-                    }}
-                  />
-                ))}
-              </div>
-              <Lightbox
-                books={booksByYear[focusedItem?.yearIndex]}
-                selectedIndex={focusedItem?.bookIndex}
-                onIndexChange={(bookIndex) => {
-                  setFocusedItem({
-                    yearIndex: focusedItem?.yearIndex,
-                    bookIndex,
-                  });
-                }}
-              />
-            </SmoothScrollProvider>
-          ) : (
-            <Loader />
-          )}
-        </div>
-      </main>
-    </CursorContextProvider>
+              {booksByYear.map((b: IBook[]) => (
+                <BooksList
+                  key={b[0]?.readIn}
+                  books={b}
+                  year={b[0]?.readIn}
+                  handleClick={(slug) => {
+                    // setFocusedItem({ yearIndex, bookIndex });
+                    // (scroll as any)?.stop();
+                    router.push(`/${slug}`);
+                  }}
+                />
+              ))}
+            </div>
+            <Lightbox
+              books={booksByYear[focusedItem?.yearIndex]}
+              selectedIndex={focusedItem?.bookIndex}
+              onIndexChange={(bookIndex) => {
+                setFocusedItem({
+                  yearIndex: focusedItem?.yearIndex,
+                  bookIndex,
+                });
+              }}
+            />
+          </SmoothScrollProvider>
+        ) : (
+          <Loader />
+        )}
+      </div>
+    </main>
   );
 };
 
 export async function getServerSideProps() {
-  const ref = db.ref(`books/`).limitToLast(30);
+  const ref = db.ref(`books/`);
   const snapshot = await ref.once(`value`);
-  const books = Object.values(snapshot.val()) || [];
+  const books = Object.values(snapshot.val()) || ([] as IBook[]);
 
   return { props: { data: books } };
 }
