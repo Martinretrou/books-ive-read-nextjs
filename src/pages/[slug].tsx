@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -10,10 +10,7 @@ import { db } from '@/../firebase';
 import { IBook } from '@/../types/book';
 import useCursorHandlers from '@/hooks/useCursorHandlers';
 
-import {
-  SmoothScrollContext,
-  SmoothScrollProvider,
-} from '@/providers/SmoothScrollProvider';
+import { SmoothScrollProvider } from '@/providers/SmoothScrollProvider';
 
 import styles from '../styles/BookDetailPage.module.css';
 
@@ -26,8 +23,6 @@ const BookDetailPage: React.FC<BookDetailPageProps> = ({
   book,
   sameAuthor,
 }) => {
-  const { scroll } = useContext(SmoothScrollContext);
-
   const { onMouseEnter, onMouseLeave } = useCursorHandlers();
 
   const handleMouseEnter = (e: any) => {
@@ -37,17 +32,6 @@ const BookDetailPage: React.FC<BookDetailPageProps> = ({
   const handleMouseLeave = (e: any) => {
     if (onMouseLeave) onMouseLeave(e, { active: false, expand: false });
   };
-
-  useEffect(() => {
-    if (scroll) {
-      (scroll as any)?.current?.scrollTo('top', {
-        offset: 0,
-        duration: 600,
-        easing: [0.25, 0.0, 0.35, 1.0],
-        disableLerp: true,
-      });
-    }
-  }, [scroll]);
 
   return (
     <main data-scroll-section>
