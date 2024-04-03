@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -24,6 +25,7 @@ const BookForm = ({ authors, book, onSubmit, onDelete }: BookFormProps) => {
   const [title, setTitle] = useState<string>(book?.title || ``);
   const [author, setAuthor] = useState<string>(book?.author || ``);
   const [year, setYear] = useState<string>(book?.readIn || ``);
+  const [pages, setPages] = useState<string>(book?.pages || ``);
   const [comment, setComment] = useState<string>(book?.comment || ``);
   const [review, setReview] = useState<string>(book?.review || ``);
   const [currentlyReading, setCurrentlyReading] = useState<boolean>(
@@ -138,43 +140,101 @@ const BookForm = ({ authors, book, onSubmit, onDelete }: BookFormProps) => {
         </div>
         <div className={styles.oneCol}>
           <div className={styles.twoCols}>
-            <input
-              className={styles.input}
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Title"
-            />
-            <Creatable
-              placeholder="Author"
-              inputId="creatable"
-              name="creatable"
-              className="creatable"
-              classNamePrefix="creatable"
-              options={authorsOptions}
-              defaultValue={authorsOptions.find(
-                (item) => item.label === book?.author,
-              )}
-              onChange={(value: { label: string; value: string }) =>
-                setAuthor(value.value)
-              }
-            />
+            <div className={styles.formItem}>
+              <label className={styles.formItem}>
+                What is the book title ?
+              </label>
+              <input
+                name="title"
+                className={styles.input}
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Enter book title"
+              />
+            </div>
+            <div className={styles.formItem}>
+              <label className={styles.formItem}>
+                Who is the book author ?
+              </label>
+              <Creatable
+                placeholder="Search or create author"
+                inputId="creatable"
+                name="author"
+                className="creatable"
+                classNamePrefix="creatable"
+                options={authorsOptions}
+                defaultValue={authorsOptions.find(
+                  (item) => item.label === book?.author,
+                )}
+                onChange={(value: { label: string; value: string }) =>
+                  setAuthor(value.value)
+                }
+              />
+            </div>
           </div>
           <div className={styles.twoCols}>
-            <Select
-              placeholder="Read in"
-              inputId="select"
-              name="select"
-              className="select"
-              classNamePrefix="select"
-              options={yearsOptions}
-              defaultValue={yearsOptions.find(
-                (item) => String(item.label) === String(book?.readIn),
-              )}
-              onChange={(value: { label: string; value: string }) =>
-                setYear(value.value)
-              }
-            />
+            <div className={styles.formItem}>
+              <label className={styles.formItem}>
+                When was the book read ?
+              </label>
+              <Select
+                placeholder="Read in"
+                inputId="select"
+                name="select"
+                className="select"
+                classNamePrefix="select"
+                options={yearsOptions}
+                defaultValue={yearsOptions.find(
+                  (item) => String(item.label) === String(book?.readIn),
+                )}
+                onChange={(value: { label: string; value: string }) =>
+                  setYear(value.value)
+                }
+              />
+            </div>
+            <div className={styles.formItem}>
+              <label className={styles.formItem}>
+                How many pages in that book ?
+              </label>
+              <input
+                className={styles.input}
+                type="text"
+                value={pages}
+                onChange={(e) => setPages(e.target.value)}
+                placeholder="Number of pages"
+              />
+            </div>
+          </div>
+
+          <div className={styles.twoCols}>
+            <div className={styles.formItem}>
+              <label className={styles.formItem}>
+                When was that book finished ?
+              </label>
+              <DayPickerInput value={date || undefined} onDayChange={setDate} />
+            </div>
+            <div className={styles.formItem}>
+              <label className={styles.formItem}>
+                What the rating for that book ?
+              </label>
+              <Select
+                placeholder="Rating of this book"
+                inputId="rating"
+                name="rating"
+                className="rating"
+                classNamePrefix="rating"
+                options={ratingOptions}
+                defaultValue={ratingOptions.find(
+                  (item) => String(item.label) === String(book?.review),
+                )}
+                onChange={(item: { label: string; value: string }) =>
+                  setReview(item.value)
+                }
+              />
+            </div>
+          </div>
+          <div className={styles.twoCols}>
             <div className={styles.currentlyReading}>
               <Toggle
                 defaultChecked={currentlyReading}
@@ -183,24 +243,6 @@ const BookForm = ({ authors, book, onSubmit, onDelete }: BookFormProps) => {
               />
               <span>Currently reading this book</span>
             </div>
-          </div>
-
-          <div className={styles.twoCols}>
-            <DayPickerInput value={date || undefined} onDayChange={setDate} />
-            <Select
-              placeholder="Rating of this book"
-              inputId="rating"
-              name="rating"
-              className="rating"
-              classNamePrefix="rating"
-              options={ratingOptions}
-              defaultValue={ratingOptions.find(
-                (item) => String(item.label) === String(book?.review),
-              )}
-              onChange={(item: { label: string; value: string }) =>
-                setReview(item.value)
-              }
-            />
           </div>
           <textarea
             className={styles.textarea}

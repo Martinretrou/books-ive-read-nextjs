@@ -14,7 +14,7 @@ const BooksGrid = ({ books }: BooksGridProps) => (
   <div className="grid-container">
     <div className="grid">
       {map(books, (book: IBook, index: number) => (
-        <Fade delay={index * 35}>
+        <Fade key={index * 35} delay={index * 35}>
           <div className="grid-item">
             <Image
               width={225}

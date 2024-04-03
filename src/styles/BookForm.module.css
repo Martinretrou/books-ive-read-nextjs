@@ -96,3 +96,12 @@
   padding: 30px;
   border-left: 1px solid #bdbdbd;
 }
+
+.formItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.formItem label {
+  margin-bottom: 8px;
+}
